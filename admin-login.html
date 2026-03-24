@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Login | Country Farm Matugga</title>
+  <meta name="robots" content="noindex, nofollow">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <link rel="icon" type="image/png" href="Logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:Inter,system-ui,sans-serif;background:linear-gradient(135deg,#173f22 0%,#1f4d2b 55%,#2b6338 100%);min-height:100vh;display:flex;align-items:center;justify-content:center;padding:1.5rem}
+    .card{background:#fff;border-radius:28px;padding:2.5rem;width:100%;max-width:420px;box-shadow:0 30px 80px rgba(0,0,0,.25)}
+    .logo{display:flex;align-items:center;gap:.85rem;margin-bottom:1.8rem}
+    .logo img{width:56px;height:56px;object-fit:contain;border-radius:16px}
+    .logo h1{font-family:"Cormorant Garamond",serif;font-size:1.9rem;color:#1f4d2b;line-height:1}
+    .logo p{color:#667168;font-size:.82rem;margin-top:.15rem}
+    h2{font-size:1.4rem;color:#1a2b1d;margin-bottom:.4rem}
+    .subtitle{color:#5e675f;font-size:.93rem;margin-bottom:1.6rem}
+    .field{margin-bottom:1.1rem}
+    .field label{display:block;font-weight:700;font-size:.88rem;color:#233426;margin-bottom:.42rem}
+    .field input{width:100%;border:1.5px solid #d8ded8;background:#fcfcfa;border-radius:14px;padding:.88rem 1rem;font-size:.95rem;color:#142018;transition:.2s}
+    .field input:focus{outline:none;border-color:#c89d2c;box-shadow:0 0 0 4px rgba(200,157,44,.12)}
+    .btn{width:100%;background:linear-gradient(135deg,#1f4d2b,#2b6338);color:#fff;border:none;border-radius:14px;padding:1rem;font-size:1rem;font-weight:700;cursor:pointer;transition:.2s;margin-top:.4rem;display:flex;align-items:center;justify-content:center;gap:.6rem}
+    .btn:hover{transform:translateY(-1px);box-shadow:0 8px 20px rgba(31,77,43,.3)}
+    .btn:disabled{opacity:.6;pointer-events:none}
+    .notice{display:none;margin-top:1rem;padding:.85rem 1rem;border-radius:12px;font-weight:600;font-size:.9rem}
+    .notice.err{background:#fff0f0;color:#b33939;border:1px solid #f0c5c5}
+    .back{display:block;text-align:center;margin-top:1.2rem;font-size:.88rem;color:#5e675f;text-decoration:none}
+    .back:hover{color:#1f4d2b}
+    .spinner{display:none;width:16px;height:16px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite;flex-shrink:0}
+    @keyframes spin{to{transform:rotate(360deg)}}
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="logo">
+      <img src="Logo.png" alt="Country Farm Matugga">
+      <div>
+        <h1>Admin Panel</h1>
+        <p>Country Farm Matugga</p>
+      </div>
+    </div>
+    <h2>Sign in</h2>
+    <p class="subtitle">Enter your admin credentials to continue.</p>
+
+    <form id="loginForm" novalidate>
+      <div class="field">
+        <label for="email">Email address</label>
+        <input id="email" name="email" type="email" placeholder="admin@example.com" required autocomplete="email">
+      </div>
+      <div class="field">
+        <label for="password">Password</label>
+        <input id="password" name="password" type="password" placeholder="Your password" required autocomplete="current-password">
+      </div>
+      <button class="btn" type="submit" id="submitBtn">
+        <span id="btnText">Sign in</span>
+        <div class="spinner" id="spinner"></div>
+      </button>
+      <div class="notice err" id="errorNotice"></div>
+    </form>
+    <a class="back" href="index.html">Back to website</a>
+  </div>
+
+  <script>
+    // If already authenticated, skip login
+    (function() {
+      fetch('api/data.php?action=dashboard', { credentials: 'include' })
+        .then(async function(r) {
+          const ct = r.headers.get('content-type') || '';
+          if (ct.includes('application/json')) {
+            return r.json();
+          } else {
+            return { success: false, message: 'Invalid server response.' };
+          }
+        })
+        .then(function(d) { if (d.success) window.location.replace('admin.html'); })
+        .catch(function() {});
+    })();
+
+    document.getElementById('loginForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      var btn     = document.getElementById('submitBtn');
+      var txt     = document.getElementById('btnText');
+      var spinner = document.getElementById('spinner');
+      var notice  = document.getElementById('errorNotice');
+
+      notice.style.display = 'none';
+      btn.disabled         = true;
+      txt.style.display    = 'none';
+      spinner.style.display = 'block';
+
+      fetch('api/data.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+        body: JSON.stringify({
+          action:   'login',
+          email:    document.getElementById('email').value.trim(),
+          password: document.getElementById('password').value
+        })
+      })
+      .then(async function(r) {
+        const ct = r.headers.get('content-type') || '';
+        if (ct.includes('application/json')) {
+          return r.json();
+        } else {
+          let msg = 'Unexpected server response.';
+          try { msg = await r.text(); } catch (e) {}
+          throw new Error(msg);
+        }
+      })
+      .then(function(data) {
+        if (data.success) {
+          window.location.replace('admin.html');
+        } else {
+          throw new Error(data.message || 'Login failed.');
+        }
+      })
+      .catch(function(err) {
+        notice.textContent    = err.message || 'Login failed. Please try again.';
+        notice.style.display  = 'block';
+        btn.disabled          = false;
+        txt.style.display     = 'block';
+        spinner.style.display = 'none';
+      });
+    });
+  </script>
+</body>
+</html>

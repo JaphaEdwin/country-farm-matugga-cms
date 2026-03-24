@@ -1,0 +1,4 @@
+# Deny direct browser access to uploaded files
+# Files are served via api/data.php?action=media only if needed
+Options -Indexes
+Require all denied

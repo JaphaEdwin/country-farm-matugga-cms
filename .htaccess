@@ -1,0 +1,59 @@
+# =============================================
+# Country Farm Matugga — Root .htaccess
+# =============================================
+
+Options -Indexes
+DirectoryIndex index.html index.php
+
+RewriteEngine On
+
+# Route /admin and /admin/ to admin.html (no PHP needed)
+RewriteRule ^admin/?$ /admin.html [L]
+
+# Block access to /api/data/ JSON files
+RewriteRule ^api/data/ - [F,L]
+
+# Block hidden files except .well-known
+RewriteRule "(^|/)\.(?!well-known/)" - [F,L]
+
+# Block sensitive files
+<FilesMatch "(^\.htaccess|\.htpasswd|config\.php|README|composer\.(json|lock))$">
+    Require all denied
+</FilesMatch>
+
+# Security headers
+<IfModule mod_headers.c>
+    Header always set X-Content-Type-Options "nosniff"
+    Header always set X-Frame-Options "SAMEORIGIN"
+    Header always set Referrer-Policy "strict-origin-when-cross-origin"
+    Header always set Permissions-Policy "geolocation=(), microphone=(), camera=()"
+    Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains" env=HTTPS
+    Header always set Content-Security-Policy "default-src 'self'; img-src 'self' data: blob: https:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; script-src 'self' 'unsafe-inline'; font-src 'self' https://fonts.gstatic.com data:; connect-src 'self'; frame-src https://www.youtube.com https://drive.google.com; frame-ancestors 'self'; base-uri 'self'; form-action 'self';"
+</IfModule>
+
+# Compression
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/html text/plain text/css application/javascript application/json image/svg+xml
+</IfModule>
+
+# Browser caching
+<IfModule mod_expires.c>
+    ExpiresActive On
+    ExpiresByType text/html "access plus 0 seconds"
+    ExpiresByType text/css "access plus 7 days"
+    ExpiresByType application/javascript "access plus 7 days"
+    ExpiresByType image/jpeg "access plus 30 days"
+    ExpiresByType image/png "access plus 30 days"
+    ExpiresByType image/webp "access plus 30 days"
+    ExpiresByType image/svg+xml "access plus 30 days"
+    ExpiresByType font/woff2 "access plus 30 days"
+</IfModule>
+
+<IfModule mod_headers.c>
+    <FilesMatch "\.(html|php)$">
+        Header set Cache-Control "no-store, no-cache, must-revalidate"
+    </FilesMatch>
+    <FilesMatch "\.(css|js|jpg|jpeg|png|gif|webp|svg|ico|woff2)$">
+        Header set Cache-Control "public, max-age=604800, immutable"
+    </FilesMatch>
+</IfModule>

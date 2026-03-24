@@ -1,0 +1,1121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Dashboard – Country Farm Matugga</title>
+<meta name="robots" content="noindex, nofollow">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<link rel="icon" type="image/png" href="Logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --g:#2d5016;--g2:#4a7c2d;--go:#c9a227;--gs:#e8c547;--gp:#eef5e8;
+  --dk:#1a202c;--mid:#4a5568;--lt:#5a6778;--bd:#e2e8f0;--bg:#f0f2f5;
+  --wh:#fff;--rd:#ef4444;--rd2:#dc2626;--ok:#10b981;--wn:#f59e0b;
+  --sidebar-bg:#1a202c;--sidebar-text:#a0aec0;
+  --card-bg:#fff;--body-bg:#f0f2f5;--text-main:#1a202c;--text-muted:#5a6778;
+  --focus-ring:rgba(201,162,39,.4);
+}
+[data-theme="dark"]{
+  --sidebar-bg:#0f1419;--sidebar-text:#8899a6;--card-bg:#192734;--body-bg:#15202b;
+  --text-main:#fff;--text-muted:#8899a6;--bd:#38444d;--wh:#192734;--bg:#15202b;
+}
+body{font-family:Inter,system-ui,sans-serif;background:var(--body-bg);color:var(--text-main);transition:background .3s,color .3s}
+a{text-decoration:none;color:inherit}
+.layout{display:flex;min-height:100vh}
+.hamburger{display:none;background:none;border:none;cursor:pointer;padding:.5rem;border-radius:8px}
+.hamburger span{display:block;width:22px;height:2px;background:var(--text-main);margin:5px 0;border-radius:2px;transition:transform .3s,opacity .3s}
+.hamburger.active span:nth-child(1){transform:rotate(45deg) translate(5px,5px)}
+.hamburger.active span:nth-child(2){opacity:0}
+.hamburger.active span:nth-child(3){transform:rotate(-45deg) translate(5px,-5px)}
+.sidebar{width:260px;flex-shrink:0;background:var(--sidebar-bg);position:fixed;top:0;left:0;height:100vh;overflow-y:auto;z-index:200;display:flex;flex-direction:column;transition:transform .3s}
+.sidebar-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:199;opacity:0;transition:opacity .3s}
+.sb-logo{padding:1.2rem;border-bottom:1px solid rgba(255,255,255,.08);display:flex;align-items:center;gap:.75rem}
+.sb-logo img{height:42px;width:auto;border-radius:8px}
+.sb-logo-txt h2{font-size:.95rem;color:var(--gs);font-weight:700}
+.sb-logo-txt p{font-size:.72rem;color:var(--sidebar-text)}
+.sb-group{padding:.6rem 0}
+.sb-label{padding:0 1.2rem;font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:#4a5568;margin-bottom:.25rem}
+.sb-item{display:flex;align-items:center;gap:.75rem;padding:.8rem 1.2rem;cursor:pointer;color:var(--sidebar-text);font-size:.88rem;font-weight:500;border-left:3px solid transparent;transition:all .2s;user-select:none}
+.sb-item:hover{background:rgba(255,255,255,.08);color:#fff}
+.sb-item.active{background:linear-gradient(90deg,rgba(45,80,22,.6),rgba(45,80,22,.3));color:#fff;border-left-color:var(--gs)}
+.sb-footer{margin-top:auto;border-top:1px solid rgba(255,255,255,.08);padding:.6rem 0}
+.main{margin-left:260px;flex:1;display:flex;flex-direction:column;min-height:100vh;transition:margin-left .3s}
+.topbar{background:var(--card-bg);padding:.9rem 1.8rem;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--bd);position:sticky;top:0;z-index:100;box-shadow:0 1px 4px rgba(0,0,0,.07);transition:background .3s}
+.topbar h1{font-size:1.25rem;font-weight:700;color:var(--text-main)}
+.topbar-r{display:flex;align-items:center;gap:.8rem}
+.admin-pill{background:linear-gradient(135deg,#ebf8f0,#d1fae5);color:var(--g);padding:.35rem .9rem;border-radius:20px;font-size:.8rem;font-weight:600;display:flex;align-items:center;gap:.4rem}
+.theme-toggle{background:var(--bd);border:none;width:42px;height:24px;border-radius:12px;cursor:pointer;position:relative;transition:background .3s}
+.theme-toggle::after{content:'';position:absolute;width:18px;height:18px;background:#fff;border-radius:50%;top:3px;left:3px;transition:transform .3s;box-shadow:0 1px 3px rgba(0,0,0,.2)}
+[data-theme="dark"] .theme-toggle{background:var(--go)}
+[data-theme="dark"] .theme-toggle::after{transform:translateX(18px)}
+.content{padding:1.6rem 1.8rem;flex:1}
+.sec{display:none;animation:fadeIn .3s ease}
+.sec.active{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.stat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:1rem;margin-bottom:1.6rem}
+.stat-card{background:var(--card-bg);border-radius:14px;padding:1.3rem;border-left:4px solid var(--go);box-shadow:0 2px 8px rgba(0,0,0,.06);transition:transform .2s,box-shadow .2s}
+.stat-card:hover{transform:translateY(-3px);box-shadow:0 6px 20px rgba(0,0,0,.1)}
+.stat-card .lbl{font-size:.8rem;color:var(--text-muted);margin-bottom:.3rem;font-weight:500}
+.stat-card .val{font-size:2rem;font-weight:700;color:var(--g);line-height:1}
+.card{background:var(--card-bg);border-radius:14px;padding:1.5rem;box-shadow:0 2px 8px rgba(0,0,0,.06);margin-bottom:1.3rem;transition:background .3s}
+.card-h{display:flex;justify-content:space-between;align-items:center;margin-bottom:1.2rem;padding-bottom:.8rem;border-bottom:2px solid var(--bd);gap:.5rem;flex-wrap:wrap}
+.card-h h3{font-size:1.05rem;font-weight:700;color:var(--text-main)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:.4rem;padding:.6rem 1.1rem;border:none;border-radius:8px;font-size:.86rem;font-weight:600;cursor:pointer;font-family:inherit;transition:all .2s;white-space:nowrap}
+.btn:hover{transform:translateY(-1px);box-shadow:0 4px 12px rgba(0,0,0,.15)}
+.btn:active{transform:none;box-shadow:none}
+.btn:disabled{opacity:.6;cursor:default;transform:none;box-shadow:none}
+.btn-primary{background:linear-gradient(135deg,var(--g),var(--g2));color:#fff}
+.btn-gold{background:linear-gradient(135deg,var(--go),var(--gs));color:var(--dk)}
+.btn-danger{background:linear-gradient(135deg,var(--rd),var(--rd2));color:#fff}
+.btn-ghost{background:var(--card-bg);color:var(--mid);border:1px solid var(--bd)}
+.btn-ghost:hover{background:var(--bd)}
+.btn-sm{padding:.38rem .75rem;font-size:.78rem}
+.frow{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:.9rem}
+.fg{margin-bottom:.9rem}
+.fg label{display:block;font-size:.82rem;font-weight:600;color:var(--text-main);margin-bottom:.38rem}
+.fg label .hint{font-weight:400;color:var(--text-muted);font-size:.76rem}
+.fc{width:100%;padding:.72rem .9rem;border:2px solid var(--bd);border-radius:10px;font-size:.88rem;font-family:inherit;background:var(--card-bg);color:var(--text-main);transition:all .25s}
+.fc:focus{outline:none;border-color:var(--go);box-shadow:0 0 0 4px var(--focus-ring)}
+textarea.fc{min-height:88px;resize:vertical}
+.sp{background:linear-gradient(135deg,#f8fafc,#f1f5f9);border-left:4px solid var(--go);border-radius:10px;padding:1.3rem;margin-bottom:1.2rem;transition:background .3s}
+[data-theme="dark"] .sp{background:linear-gradient(135deg,#1e2d3d,#192734)}
+.sp h4{font-size:.95rem;font-weight:700;color:var(--g);margin-bottom:.9rem;display:flex;align-items:center;gap:.5rem}
+.sp.danger{border-left-color:var(--rd);background:linear-gradient(135deg,#fff5f5,#fee2e2)}
+[data-theme="dark"] .sp.danger{background:linear-gradient(135deg,#3d1e1e,#2d1919)}
+.sp.danger h4{color:#dc2626}
+.tw{overflow-x:auto;border-radius:10px}
+table{width:100%;border-collapse:collapse;font-size:.86rem}
+th{padding:.85rem 1rem;text-align:left;background:linear-gradient(135deg,#f7fafc,#edf2f7);border-bottom:2px solid var(--bd);font-weight:600;color:var(--mid);font-size:.8rem;white-space:nowrap}
+[data-theme="dark"] th{background:linear-gradient(135deg,#1e2d3d,#192734)}
+td{padding:.85rem 1rem;border-bottom:1px solid var(--bd);vertical-align:middle}
+tr:last-child td{border-bottom:none}
+tbody tr:hover td{background:rgba(201,162,39,.05)}
+.empty-state{text-align:center;padding:3rem 2rem}
+.empty-state-icon{font-size:3.5rem;margin-bottom:1rem;opacity:.6}
+.empty-state-title{font-size:1.1rem;font-weight:600;color:var(--text-main);margin-bottom:.5rem}
+.empty-state-desc{font-size:.88rem;color:var(--text-muted);max-width:300px;margin:0 auto}
+.badge{display:inline-block;padding:.22rem .65rem;border-radius:20px;font-size:.76rem;font-weight:600}
+.bg-green{background:linear-gradient(135deg,#d1fae5,#a7f3d0);color:#065f46}
+.bg-yellow{background:linear-gradient(135deg,#fef3c7,#fde68a);color:#92400e}
+.bg-red{background:linear-gradient(135deg,#fee2e2,#fecaca);color:#991b1b}
+.bg-blue{background:linear-gradient(135deg,#dbeafe,#bfdbfe);color:#1e40af}
+.bg-gray{background:linear-gradient(135deg,#f3f4f6,#e5e7eb);color:#374151}
+.upload-zone{border:2px dashed var(--bd);border-radius:12px;padding:2rem;text-align:center;cursor:pointer;transition:all .3s;background:var(--card-bg)}
+.upload-zone:hover,.upload-zone.drag{border-color:var(--go);background:rgba(201,162,39,.05)}
+.upload-zone .uz-icon{font-size:2.5rem;margin-bottom:.5rem}
+.upload-zone p{font-size:.85rem;color:var(--text-muted);margin-bottom:.3rem}
+.upload-zone strong{font-size:.82rem;color:var(--g)}
+.upload-zone input[type=file]{display:none}
+.media-preview{margin-top:.6rem;position:relative;display:inline-block}
+.media-preview img,.media-preview video{max-width:200px;max-height:140px;object-fit:cover;border-radius:8px;border:2px solid var(--bd)}
+.media-remove{position:absolute;top:-8px;right:-8px;background:var(--rd);color:#fff;border:none;border-radius:50%;width:24px;height:24px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:.8rem;font-weight:700;box-shadow:0 2px 6px rgba(239,68,68,.3)}
+.itabs{display:flex;gap:.4rem;margin-bottom:.6rem}
+.itab{padding:.33rem .8rem;border:1px solid var(--bd);border-radius:8px;font-size:.78rem;font-weight:600;cursor:pointer;background:var(--card-bg);color:var(--mid);transition:all .2s}
+.itab.active{background:linear-gradient(135deg,var(--g),var(--g2));color:#fff;border-color:var(--g)}
+.media-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:.9rem;margin-top:.8rem}
+.media-item{border:1px solid var(--bd);border-radius:10px;overflow:hidden;position:relative;background:var(--card-bg);transition:transform .2s,box-shadow .2s}
+.media-item:hover{transform:translateY(-2px);box-shadow:0 5px 16px rgba(0,0,0,.1)}
+.media-item img,.media-item video{width:100%;height:100px;object-fit:cover;display:block}
+.media-item-info{padding:.4rem .6rem;font-size:.73rem;color:var(--text-muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.media-del{position:absolute;top:5px;right:5px;background:var(--rd);color:#fff;border:none;border-radius:6px;padding:.18rem .42rem;font-size:.72rem;cursor:pointer;opacity:0;transition:opacity .2s}
+.media-item:hover .media-del{opacity:1}
+.media-use{position:absolute;bottom:26px;left:0;right:0;background:rgba(45,80,22,.9);color:#fff;border:none;font-size:.74rem;padding:.3rem;cursor:pointer;display:none}
+.media-item:hover .media-use{display:block}
+.modal-wrap{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:500;align-items:center;justify-content:center;padding:1rem;backdrop-filter:blur(4px)}
+.modal-wrap.on{display:flex}
+.modal-box{background:var(--card-bg);border-radius:16px;max-width:580px;width:100%;max-height:90vh;overflow-y:auto;animation:modalIn .25s ease both}
+@keyframes modalIn{from{opacity:0;transform:scale(.96) translateY(8px)}to{opacity:1;transform:none}}
+.modal-hd{padding:1.3rem 1.3rem .8rem;border-bottom:1px solid var(--bd);display:flex;justify-content:space-between;align-items:center}
+.modal-hd h2{font-size:1.1rem;font-weight:700;color:var(--text-main)}
+.modal-x{background:none;border:none;cursor:pointer;color:var(--lt);font-size:1.4rem;padding:.3rem;border-radius:8px;line-height:1;transition:all .2s}
+.modal-x:hover{background:var(--bd);color:var(--rd);transform:rotate(90deg)}
+.modal-bd{padding:1.3rem}
+.toast{position:fixed;bottom:1.3rem;right:1.3rem;padding:.85rem 1.2rem;border-radius:12px;color:#fff;z-index:600;display:none;align-items:center;gap:.6rem;font-size:.88rem;font-weight:600;box-shadow:0 6px 24px rgba(0,0,0,.2);animation:toastIn .35s ease both}
+.toast.on{display:flex}
+.toast.ok{background:linear-gradient(135deg,var(--g),var(--g2))}
+.toast.err{background:linear-gradient(135deg,var(--rd),var(--rd2))}
+.toast.warn{background:linear-gradient(135deg,var(--wn),#d97706)}
+@keyframes toastIn{from{opacity:0;transform:translateY(14px) scale(.92)}to{opacity:1;transform:none}}
+.prod-item{display:grid;grid-template-columns:60px 1fr;gap:1rem;align-items:center;padding:.8rem;border:1px solid var(--bd);border-radius:10px;margin-bottom:.6rem;transition:box-shadow .2s}
+.prod-item:hover{box-shadow:0 3px 12px rgba(0,0,0,.07)}
+.prod-item img{width:60px;height:48px;object-fit:cover;border-radius:8px;background:var(--bd)}
+.prod-item-body{flex:1}
+.prod-item-body strong{display:block;font-weight:600;color:var(--text-main)}
+.prod-item-body small{color:var(--text-muted);font-size:.8rem}
+.prod-actions{display:flex;gap:.4rem;margin-top:.4rem;flex-wrap:wrap}
+.status-btn{padding:.22rem .6rem;border-radius:8px;border:1px solid var(--bd);background:var(--card-bg);color:var(--mid);font-size:.74rem;cursor:pointer;transition:all .2s}
+.status-btn:hover{background:var(--bd)}
+.status-btn.active-status{background:linear-gradient(135deg,var(--g),var(--g2));color:#fff;border-color:var(--g)}
+@media(max-width:900px){
+  .hamburger{display:block}
+  .sidebar{transform:translateX(-100%);width:275px}
+  .sidebar.open{transform:translateX(0);box-shadow:6px 0 30px rgba(0,0,0,.3)}
+  .sidebar-overlay.open{display:block;opacity:1}
+  .main{margin-left:0}
+  .topbar{padding:.8rem 1rem}
+  .content{padding:1.2rem 1rem}
+  .stat-grid{grid-template-columns:repeat(2,1fr)}
+  .frow{grid-template-columns:1fr}
+}
+@media(max-width:480px){
+  .stat-grid{grid-template-columns:1fr}
+  .card-h{flex-direction:column;align-items:flex-start}
+}
+</style>
+</head>
+<body>
+<div class="layout">
+<div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
+<aside class="sidebar" id="sidebar">
+  <div class="sb-logo">
+    <img src="Logo.png" alt="CFM" id="sbLogo">
+    <div class="sb-logo-txt"><h2>CFM Admin</h2><p>Country Farm Matugga</p></div>
+  </div>
+  <div class="sb-group">
+    <div class="sb-label">Main</div>
+    <a class="sb-item active" onclick="nav('dashboard',this)">
+      <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>Dashboard
+    </a>
+    <a class="sb-item" onclick="nav('quotes',this)">
+      <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Quote Requests
+    </a>
+  </div>
+  <div class="sb-group">
+    <div class="sb-label">Content</div>
+    <a class="sb-item" onclick="nav('products',this)">
+      <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 8 12 12 14 14"/></svg>Products
+    </a>
+    <a class="sb-item" onclick="nav('website',this)">
+      <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>Website Content
+    </a>
+    <a class="sb-item" onclick="nav('media',this)">
+      <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>Media Library
+    </a>
+  </div>
+  <div class="sb-group">
+    <div class="sb-label">System</div>
+    <a class="sb-item" onclick="nav('settings',this)">
+      <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>Settings
+    </a>
+  </div>
+  <div class="sb-footer">
+    <a class="sb-item" href="index.html" target="_blank">
+      <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>View Website
+    </a>
+    <a class="sb-item" href="#" onclick="doLogout(); return false;">
+      <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>Logout
+    </a>
+  </div>
+</aside>
+
+<div class="main">
+  <div class="topbar">
+    <div style="display:flex;align-items:center;gap:.8rem">
+      <button class="hamburger" id="hamburger" onclick="toggleSidebar()"><span></span><span></span><span></span></button>
+      <h1 id="pageTitle">Dashboard</h1>
+    </div>
+    <div class="topbar-r">
+      <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()" aria-label="Toggle dark mode"></button>
+      <div class="admin-pill">
+        <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        <span id="adminEmail">admin</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="content">
+
+    <!-- DASHBOARD -->
+    <div class="sec active" id="sec-dashboard">
+      <div class="stat-grid">
+        <div class="stat-card"><div class="lbl">Total Quotes</div><div class="val" id="st-quotes">0</div></div>
+        <div class="stat-card"><div class="lbl">New Quotes</div><div class="val" id="st-new">0</div></div>
+        <div class="stat-card"><div class="lbl">Products</div><div class="val" id="st-products">0</div></div>
+        <div class="stat-card" style="border-left-color:var(--ok)"><div class="lbl">Media Files</div><div class="val" id="st-media">0</div></div>
+      </div>
+      <div class="card">
+        <div class="card-h"><h3>Recent Quote Requests</h3><button class="btn btn-primary btn-sm" onclick="nav('quotes',null)">View All</button></div>
+        <div id="db-quotes"></div>
+      </div>
+    </div>
+
+    <!-- QUOTES -->
+    <div class="sec" id="sec-quotes">
+      <div class="card">
+        <div class="card-h">
+          <h3>All Quote Requests</h3>
+          <div style="display:flex;gap:.5rem;flex-wrap:wrap">
+            <select class="fc btn-sm" id="quoteFilter" onchange="renderQuotes()" style="width:auto;padding:.38rem .7rem">
+              <option value="">All</option>
+              <option value="New">New</option>
+              <option value="Read">Read</option>
+              <option value="Contacted">Contacted</option>
+              <option value="Completed">Completed</option>
+            </select>
+            <button class="btn btn-danger btn-sm" onclick="clearAllQuotes()">Clear All</button>
+          </div>
+        </div>
+        <div id="quotes-list"></div>
+      </div>
+    </div>
+
+    <!-- PRODUCTS -->
+    <div class="sec" id="sec-products">
+      <div class="card">
+        <div class="card-h"><h3>Products &amp; Pricing</h3><button class="btn btn-primary" onclick="openProdModal()">+ Add Product</button></div>
+        <div id="prod-list"></div>
+      </div>
+    </div>
+
+    <!-- WEBSITE CONTENT -->
+    <div class="sec" id="sec-website">
+      <div class="card">
+        <div class="card-h"><h3>Website Content</h3><button class="btn btn-primary" onclick="saveContent()">Save All Changes</button></div>
+
+        <!-- Site Identity -->
+        <div class="sp">
+          <h4>🏠 Site Identity</h4>
+          <div class="frow">
+            <div class="fg"><label>Farm Name</label><input class="fc" type="text" id="c-farmName"></div>
+          </div>
+          <div class="fg">
+            <label>Logo Image <span class="hint">— upload or paste URL</span></label>
+            <div class="itabs"><span class="itab active" onclick="toggleIT('logo','url',this)">URL</span><span class="itab" onclick="toggleIT('logo','file',this)">Upload</span></div>
+            <div id="logo-url-wrap"><input class="fc" type="url" id="c-logoUrl" placeholder="https://..." oninput="prevUrl('c-logoUrl','logo-pi','logo-pw')"></div>
+            <div id="logo-file-wrap" style="display:none">
+              <div class="upload-zone" onclick="document.getElementById('logo-fi').click()" ondragover="dzOver(event,this)" ondragleave="dzLeave(this)" ondrop="dzDrop(event,'logo-fi','logo-pi','logo-pw','c-logoUrl')">
+                <div class="uz-icon">📷</div><p>Click to upload or drag & drop</p><strong>PNG, JPG, WEBP up to 10MB</strong>
+                <input type="file" id="logo-fi" accept="image/*" onchange="doUpload(this,'logo-pi','logo-pw','c-logoUrl')">
+              </div>
+            </div>
+            <div class="media-preview" id="logo-pw" style="display:none"><img id="logo-pi" alt="Logo" style="max-width:120px;max-height:80px"><button class="media-remove" onclick="clearPrev('logo-pw','c-logoUrl')">✕</button></div>
+          </div>
+        </div>
+
+        <!-- Hero -->
+        <div class="sp">
+          <h4>🖼 Hero Section</h4>
+          <div class="frow">
+            <div class="fg"><label>Main Headline</label><input class="fc" type="text" id="c-heroTitle"></div>
+            <div class="fg"><label>Sub-headline</label><input class="fc" type="text" id="c-heroSubtitle"></div>
+          </div>
+          <div class="fg">
+            <label>Hero Background Image <span class="hint">— upload or paste URL</span></label>
+            <div class="itabs"><span class="itab active" onclick="toggleIT('hero','url',this)">URL</span><span class="itab" onclick="toggleIT('hero','file',this)">Upload</span></div>
+            <div id="hero-url-wrap"><input class="fc" type="url" id="c-heroBg" placeholder="https://images.unsplash.com/..." oninput="prevUrl('c-heroBg','hero-pi','hero-pw')"></div>
+            <div id="hero-file-wrap" style="display:none">
+              <div class="upload-zone" onclick="document.getElementById('hero-fi').click()" ondragover="dzOver(event,this)" ondragleave="dzLeave(this)" ondrop="dzDrop(event,'hero-fi','hero-pi','hero-pw','c-heroBg')">
+                <div class="uz-icon">🏡</div><p>Click to upload or drag & drop</p><strong>JPG, PNG, WEBP — recommended 1400×900</strong>
+                <input type="file" id="hero-fi" accept="image/*" onchange="doUpload(this,'hero-pi','hero-pw','c-heroBg')">
+              </div>
+            </div>
+            <div class="media-preview" id="hero-pw" style="display:none"><img id="hero-pi" alt="Hero" style="max-width:280px;max-height:140px"><button class="media-remove" onclick="clearPrev('hero-pw','c-heroBg')">✕</button></div>
+          </div>
+        </div>
+
+        <!-- Stats -->
+        <div class="sp">
+          <h4>📊 Statistics</h4>
+          <div class="frow">
+            <div class="fg"><label>Years Experience</label><input class="fc" type="text" id="c-statsYears"></div>
+            <div class="fg"><label>Chicks Delivered</label><input class="fc" type="text" id="c-statsChicks"></div>
+            <div class="fg"><label>Survival Rate</label><input class="fc" type="text" id="c-statsSurvival"></div>
+            <div class="fg"><label>Happy Farmers</label><input class="fc" type="text" id="c-statsFarmers"></div>
+          </div>
+        </div>
+
+        <!-- About -->
+        <div class="sp">
+          <h4>ℹ About Section</h4>
+          <div class="fg">
+            <label>About Image <span class="hint">— upload or paste URL</span></label>
+            <div class="itabs"><span class="itab active" onclick="toggleIT('about','url',this)">URL</span><span class="itab" onclick="toggleIT('about','file',this)">Upload</span></div>
+            <div id="about-url-wrap"><input class="fc" type="url" id="c-aboutImage" placeholder="https://..." oninput="prevUrl('c-aboutImage','about-pi','about-pw')"></div>
+            <div id="about-file-wrap" style="display:none">
+              <div class="upload-zone" onclick="document.getElementById('about-fi').click()" ondragover="dzOver(event,this)" ondragleave="dzLeave(this)" ondrop="dzDrop(event,'about-fi','about-pi','about-pw','c-aboutImage')">
+                <div class="uz-icon">🌿</div><p>Click to upload or drag & drop</p><strong>JPG, PNG, WEBP</strong>
+                <input type="file" id="about-fi" accept="image/*" onchange="doUpload(this,'about-pi','about-pw','c-aboutImage')">
+              </div>
+            </div>
+            <div class="media-preview" id="about-pw" style="display:none"><img id="about-pi" alt="About" style="max-width:240px;max-height:160px"><button class="media-remove" onclick="clearPrev('about-pw','c-aboutImage')">✕</button></div>
+          </div>
+          <div class="fg"><label>Paragraph 1</label><textarea class="fc" id="c-about1"></textarea></div>
+          <div class="fg"><label>Paragraph 2</label><textarea class="fc" id="c-about2"></textarea></div>
+          <div class="fg"><label>Paragraph 3 <span class="hint">(optional)</span></label><textarea class="fc" id="c-about3"></textarea></div>
+        </div>
+
+        <!-- Testimonials -->
+        <div class="sp">
+          <h4>💬 Testimonials</h4>
+          <div id="testimonials-editor"></div>
+          <button class="btn btn-ghost btn-sm" onclick="addTestimonial()" style="margin-top:.5rem">+ Add Testimonial</button>
+        </div>
+
+        <!-- FAQs -->
+        <div class="sp">
+          <h4>❓ FAQs</h4>
+          <div id="faqs-editor"></div>
+          <button class="btn btn-ghost btn-sm" onclick="addFaq()" style="margin-top:.5rem">+ Add FAQ</button>
+        </div>
+
+        <!-- Contact -->
+        <div class="sp">
+          <h4>📞 Contact &amp; Social</h4>
+          <div class="frow">
+            <div class="fg"><label>Address</label><input class="fc" type="text" id="c-addr"></div>
+            <div class="fg"><label>Phone</label><input class="fc" type="tel" id="c-phone"></div>
+            <div class="fg"><label>Email</label><input class="fc" type="email" id="c-email"></div>
+            <div class="fg"><label>WhatsApp <span class="hint">(digits only)</span></label><input class="fc" type="text" id="c-wa"></div>
+            <div class="fg"><label>Business Hours</label><input class="fc" type="text" id="c-hours"></div>
+          </div>
+          <div class="frow">
+            <div class="fg"><label>Facebook URL</label><input class="fc" type="url" id="c-fb" placeholder="https://facebook.com/..."></div>
+            <div class="fg"><label>Instagram URL</label><input class="fc" type="url" id="c-ig" placeholder="https://instagram.com/..."></div>
+          </div>
+        </div>
+
+        <button class="btn btn-primary" onclick="saveContent()" style="width:100%;padding:.85rem;font-size:.95rem">✓ Save All Changes</button>
+      </div>
+    </div>
+
+    <!-- MEDIA LIBRARY -->
+    <div class="sec" id="sec-media">
+      <div class="card">
+        <div class="card-h">
+          <h3>Media Library</h3>
+          <div style="display:flex;gap:.5rem">
+            <button class="btn btn-primary" onclick="document.getElementById('ml-upload').click()">+ Upload Files</button>
+            <input type="file" id="ml-upload" accept="image/*,video/*" multiple style="display:none" onchange="handleMLUpload(this)">
+          </div>
+        </div>
+        <div class="upload-zone" id="ml-dropzone" ondragover="dzOver(event,this)" ondragleave="dzLeave(this)" ondrop="dzDropML(event)" style="margin-bottom:1.2rem" onclick="document.getElementById('ml-upload2').click()">
+          <div class="uz-icon">📂</div>
+          <p>Drop images &amp; videos here, or click to browse</p>
+          <strong>JPG, PNG, WEBP, MP4, MOV up to 200MB each</strong>
+          <input type="file" id="ml-upload2" accept="image/*,video/*" multiple style="display:none" onchange="handleMLUpload(this)">
+        </div>
+        <div id="media-grid"></div>
+      </div>
+    </div>
+
+    <!-- SETTINGS -->
+    <div class="sec" id="sec-settings">
+      <div class="card">
+        <div class="card-h"><h3>Account Settings</h3></div>
+        <div class="sp">
+          <h4>Current Login</h4>
+          <div class="fg"><label>Current Email</label><input class="fc" type="email" id="s-curEmail" readonly></div>
+          <div class="frow">
+            <div class="fg"><label>New Email Address</label><input class="fc" type="email" id="s-newEmail" placeholder="new@email.com"></div>
+          </div>
+          <button class="btn btn-primary" onclick="updateEmail()">Update Email</button>
+        </div>
+        <div class="sp">
+          <h4>Change Password</h4>
+          <div class="frow">
+            <div class="fg"><label>Current Password</label><input class="fc" type="password" id="s-curPw"></div>
+            <div class="fg"><label>New Password</label><input class="fc" type="password" id="s-newPw" placeholder="Min 8 characters"></div>
+            <div class="fg"><label>Confirm New Password</label><input class="fc" type="password" id="s-confPw"></div>
+          </div>
+          <button class="btn btn-primary" onclick="updatePassword()">Update Password</button>
+        </div>
+        <div class="sp danger">
+          <h4>⚠ Danger Zone</h4>
+          <p style="font-size:.85rem;color:#7f1d1d;margin-bottom:1rem">Permanently delete all site content and reset to defaults. This cannot be undone.</p>
+          <button class="btn btn-danger" onclick="resetAllContent()">🗑 Reset All Content</button>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- end content -->
+</div><!-- end main -->
+</div><!-- end layout -->
+
+<!-- PRODUCT MODAL -->
+<div class="modal-wrap" id="modal-prod">
+  <div class="modal-box">
+    <div class="modal-hd"><h2 id="prod-modal-title">Add Product</h2><button class="modal-x" onclick="closeModal('modal-prod')">✕</button></div>
+    <div class="modal-bd">
+      <input type="hidden" id="p-id">
+      <div class="fg"><label>Product Name *</label><input class="fc" type="text" id="p-name" required></div>
+      <div class="fg"><label>Description *</label><textarea class="fc" id="p-desc" required></textarea></div>
+      <div class="frow">
+        <div class="fg"><label>Unit Price (UGX) *</label><input class="fc" type="number" id="p-price" required min="0"></div>
+        <div class="fg"><label>Badge label</label><input class="fc" type="text" id="p-badge" placeholder="e.g. Fast growth"></div>
+      </div>
+      <div class="fg">
+        <label>Product Image <span class="hint">— upload or paste URL</span></label>
+        <div class="itabs"><span class="itab active" onclick="toggleIT('p-img','url',this)">URL</span><span class="itab" onclick="toggleIT('p-img','file',this)">Upload</span></div>
+        <div id="p-img-url-wrap"><input class="fc" type="url" id="p-img" placeholder="https://..." oninput="prevUrl('p-img','p-pi','p-pw')"></div>
+        <div id="p-img-file-wrap" style="display:none">
+          <div class="upload-zone" onclick="document.getElementById('p-fi').click()" ondragover="dzOver(event,this)" ondragleave="dzLeave(this)" ondrop="dzDrop(event,'p-fi','p-pi','p-pw','p-img')">
+            <div class="uz-icon">📷</div><p>Click to upload product photo</p><strong>JPG, PNG, WEBP up to 10MB</strong>
+            <input type="file" id="p-fi" accept="image/*" onchange="doUpload(this,'p-pi','p-pw','p-img')">
+          </div>
+        </div>
+        <div class="media-preview" id="p-pw" style="display:none"><img id="p-pi" alt="Product" style="max-width:200px;max-height:140px"><button class="media-remove" onclick="clearPrev('p-pw','p-img')">✕</button></div>
+      </div>
+      <button class="btn btn-primary" onclick="saveProduct()" style="width:100%;padding:.8rem;margin-top:.3rem">Save Product</button>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"><span id="toast-msg"></span></div>
+
+<script>
+// ── AUTH CHECK ────────────────────────────────────────────────────────────
+(function checkAuth() {
+  fetch('api/data.php?action=dashboard', { credentials: 'include' })
+    .then(async function(r) {
+      if (r.status === 401) window.location.replace('admin-login.html');
+      const ct = r.headers.get('content-type') || '';
+      if (ct.includes('application/json')) {
+        return r.json();
+      } else {
+        let msg = 'Invalid server response.';
+        try { msg = await r.text(); } catch (e) {}
+        throw new Error(msg);
+      }
+    })
+    .then(function(d) {
+      if (!d || !d.success) { window.location.replace('admin-login.html'); return; }
+      // Boot with data
+      _state.quotes   = d.quotes   || [];
+      _state.products = d.products || [];
+      _state.content  = d.content  || {};
+      _state.media    = d.media    || [];
+      _state.email    = d.email    || 'admin';
+
+      document.getElementById('adminEmail').textContent = _state.email;
+      document.getElementById('s-curEmail').value       = _state.email;
+
+      renderDashboard();
+      loadTheme();
+    })
+    .catch(function() { window.location.replace('admin-login.html'); });
+})();
+
+// ── STATE ─────────────────────────────────────────────────────────────────
+var _state = { quotes: [], products: [], content: {}, media: [], email: '' };
+
+// ── UTILS ─────────────────────────────────────────────────────────────────
+function $i(id) { return document.getElementById(id); }
+function gv(id)  { return ($i(id) || {}).value || ''; }
+function sv(id, v) { if ($i(id)) $i(id).value = v; }
+function esc(s) {
+  return String(s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+function toast(msg, type) {
+  type = type || 'ok';
+  var t = $i('toast');
+  $i('toast-msg').textContent = msg;
+  t.className = 'toast ' + type + ' on';
+  clearTimeout(t._t);
+  t._t = setTimeout(function() { t.classList.remove('on'); }, 3200);
+}
+function openModal(id)  { $i(id).classList.add('on'); }
+function closeModal(id) { $i(id).classList.remove('on'); }
+document.querySelectorAll('.modal-wrap').forEach(function(m) {
+  m.addEventListener('click', function(e) { if (e.target === m) closeModal(m.id); });
+});
+function emptyState(icon, title, desc) {
+  return '<div class="empty-state"><div class="empty-state-icon">' + icon + '</div>'
+       + '<div class="empty-state-title">' + esc(title) + '</div>'
+       + '<div class="empty-state-desc">' + esc(desc) + '</div></div>';
+}
+
+// ── API ───────────────────────────────────────────────────────────────────
+function api(payload) {
+  return fetch('api/data.php', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    credentials: 'include',
+    body: JSON.stringify(payload)
+  }).then(async function(r) {
+    const ct = r.headers.get('content-type') || '';
+    if (ct.includes('application/json')) {
+      const d = await r.json();
+      if (!d.success) throw new Error(d.message || 'Request failed');
+      return d;
+    } else {
+      let msg = 'Invalid server response.';
+      try { msg = await r.text(); } catch (e) {}
+      throw new Error(msg);
+    }
+  });
+}
+
+// ── SIDEBAR / THEME / NAV ─────────────────────────────────────────────────
+function toggleSidebar() {
+  var sb = $i('sidebar'), ov = $i('sidebarOverlay'), hb = $i('hamburger');
+  sb.classList.toggle('open'); ov.classList.toggle('open'); hb.classList.toggle('active');
+}
+function closeSidebar() {
+  $i('sidebar').classList.remove('open');
+  $i('sidebarOverlay').classList.remove('open');
+  $i('hamburger').classList.remove('active');
+}
+function toggleTheme() {
+  var isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+  document.documentElement.setAttribute('data-theme', isDark ? 'light' : 'dark');
+  localStorage.setItem('cfm_theme', isDark ? 'light' : 'dark');
+}
+function loadTheme() {
+  var saved = localStorage.getItem('cfm_theme');
+  if (saved) document.documentElement.setAttribute('data-theme', saved);
+  else if (window.matchMedia && window.matchMedia('(prefers-color-scheme:dark)').matches)
+    document.documentElement.setAttribute('data-theme', 'dark');
+}
+var _titles = {
+  dashboard: 'Dashboard', quotes: 'Quote Requests', products: 'Products',
+  website: 'Website Content', media: 'Media Library', settings: 'Settings'
+};
+function nav(section, el) {
+  if (window.innerWidth <= 900) closeSidebar();
+  document.querySelectorAll('.sec').forEach(function(s) { s.classList.remove('active'); });
+  document.querySelectorAll('.sb-item').forEach(function(i) { i.classList.remove('active'); });
+  $i('sec-' + section).classList.add('active');
+  if (el) el.classList.add('active');
+  else {
+    document.querySelectorAll('.sb-item').forEach(function(i) {
+      if (i.getAttribute('onclick') && i.getAttribute('onclick').indexOf("'" + section + "'") > -1)
+        i.classList.add('active');
+    });
+  }
+  $i('pageTitle').textContent = _titles[section] || section;
+  if (section === 'dashboard') renderDashboard();
+  else if (section === 'quotes') renderQuotes();
+  else if (section === 'products') renderProducts();
+  else if (section === 'website') loadContentFields();
+  else if (section === 'media') renderMedia();
+  else if (section === 'settings') loadSettings();
+}
+
+// ── DASHBOARD ─────────────────────────────────────────────────────────────
+function renderDashboard() {
+  var q = _state.quotes, p = _state.products, m = _state.media;
+  $i('st-quotes').textContent   = q.length;
+  $i('st-new').textContent      = q.filter(function(x) { return x.status === 'New'; }).length;
+  $i('st-products').textContent = p.length;
+  $i('st-media').textContent    = m.length;
+
+  var recent = q.slice().reverse().slice(0, 5);
+  $i('db-quotes').innerHTML = recent.length
+    ? '<div class="tw"><table><thead><tr><th>Name</th><th>Product</th><th>Qty</th><th>District</th><th>Status</th><th>Date</th></tr></thead><tbody>'
+      + recent.map(function(r) {
+          var sc = statusClass(r.status);
+          return '<tr><td><strong>' + esc(r.name) + '</strong><br><small>' + esc(r.phone) + '</small></td>'
+               + '<td>' + esc(r.product) + '</td><td>' + esc(String(r.quantity)) + '</td>'
+               + '<td>' + esc(r.district || '—') + '</td>'
+               + '<td><span class="badge ' + sc + '">' + esc(r.status || 'New') + '</span></td>'
+               + '<td style="white-space:nowrap;font-size:.8rem;color:var(--text-muted)">' + fmtDate(r.createdAt) + '</td></tr>';
+        }).join('')
+      + '</tbody></table></div>'
+    : emptyState('💬', 'No Quote Requests Yet', 'Quote requests from the public site will appear here.');
+}
+
+// ── QUOTES ────────────────────────────────────────────────────────────────
+function statusClass(s) {
+  return {New:'bg-yellow', Read:'bg-blue', Contacted:'bg-green', Completed:'bg-gray', Cancelled:'bg-red'}[s] || 'bg-yellow';
+}
+function fmtDate(d) {
+  if (!d) return '—';
+  return new Date(d).toLocaleString('en-GB', { day:'2-digit', month:'short', year:'numeric', hour:'2-digit', minute:'2-digit' });
+}
+function renderQuotes() {
+  var filter = gv('quoteFilter');
+  var list = _state.quotes.slice().reverse();
+  if (filter) list = list.filter(function(q) { return q.status === filter; });
+
+  $i('quotes-list').innerHTML = list.length
+    ? '<div class="tw"><table><thead><tr><th>Date</th><th>Name &amp; Phone</th><th>Product</th><th>Qty</th><th>Est. Total</th><th>District</th><th>Status</th><th>Actions</th></tr></thead><tbody>'
+      + list.map(function(q) {
+          var sc = statusClass(q.status);
+          var total = q.estimatedTotal ? 'UGX ' + Number(q.estimatedTotal).toLocaleString() : '—';
+          var statusOpts = ['New','Read','Contacted','Completed','Cancelled'].map(function(s) {
+            return '<option value="' + s + '"' + (q.status === s ? ' selected' : '') + '>' + s + '</option>';
+          }).join('');
+          return '<tr>'
+               + '<td style="white-space:nowrap;font-size:.8rem;color:var(--text-muted)">' + fmtDate(q.createdAt) + '</td>'
+               + '<td><strong>' + esc(q.name) + '</strong><br><small>' + esc(q.phone) + '</small>'
+               + (q.farmType ? '<br><small style="color:var(--text-muted)">' + esc(q.farmType) + '</small>' : '') + '</td>'
+               + '<td>' + esc(q.product) + '</td>'
+               + '<td>' + esc(String(q.quantity)) + '</td>'
+               + '<td><strong>' + total + '</strong></td>'
+               + '<td>' + esc(q.district || '—') + '</td>'
+               + '<td><span class="badge ' + sc + '">' + esc(q.status || 'New') + '</span></td>'
+               + '<td style="display:flex;gap:.3rem;flex-wrap:wrap">'
+               + '<select class="fc" style="width:auto;padding:.28rem .5rem;font-size:.76rem" onchange="changeQuoteStatus(\'' + esc(q.id) + '\',this.value)">' + statusOpts + '</select>'
+               + '<button class="btn btn-danger btn-sm" onclick="deleteQuote(\'' + esc(q.id) + '\')">Del</button>'
+               + '</td></tr>';
+        }).join('')
+      + '</tbody></table></div>'
+    : emptyState('📬', 'No Quote Requests', 'Quote requests from your website will show up here.');
+}
+
+function changeQuoteStatus(id, status) {
+  api({ action: 'update_quote_status', id: id, status: status })
+    .then(function() {
+      var q = _state.quotes.find(function(x) { return x.id === id; });
+      if (q) q.status = status;
+      renderDashboard();
+      toast('Status updated to ' + status);
+    })
+    .catch(function(e) { toast(e.message, 'err'); });
+}
+
+function deleteQuote(id) {
+  if (!confirm('Delete this quote?')) return;
+  api({ action: 'delete_quote', id: id })
+    .then(function() {
+      _state.quotes = _state.quotes.filter(function(q) { return q.id !== id; });
+      renderQuotes(); renderDashboard(); toast('Quote deleted', 'warn');
+    })
+    .catch(function(e) { toast(e.message, 'err'); });
+}
+
+function clearAllQuotes() {
+  if (!confirm('Delete ALL quote requests? This cannot be undone.')) return;
+  var ids = _state.quotes.map(function(q) { return q.id; });
+  var chain = Promise.resolve();
+  ids.forEach(function(id) {
+    chain = chain.then(function() { return api({ action: 'delete_quote', id: id }); });
+  });
+  chain.then(function() {
+    _state.quotes = []; renderQuotes(); renderDashboard(); toast('All quotes cleared', 'warn');
+  }).catch(function(e) { toast(e.message, 'err'); });
+}
+
+// ── PRODUCTS ──────────────────────────────────────────────────────────────
+function renderProducts() {
+  $i('st-products').textContent = _state.products.length;
+  if (!_state.products.length) {
+    $i('prod-list').innerHTML = emptyState('🐣', 'No Products', 'Add your first product to display on the website.'); return;
+  }
+  $i('prod-list').innerHTML = _state.products.map(function(p) {
+    return '<div class="prod-item">'
+         + '<img src="' + esc(p.image || 'Logo.png') + '" onerror="this.src=\'Logo.png\'" alt="' + esc(p.name) + '">'
+         + '<div class="prod-item-body">'
+         + '<strong>' + esc(p.name) + '</strong>'
+         + '<small>' + esc(p.description) + '</small>'
+         + '<div class="prod-actions">'
+         + '<span class="badge bg-yellow">UGX ' + Number(p.price).toLocaleString() + '</span>'
+         + (p.badge ? '<span class="badge bg-green">' + esc(p.badge) + '</span>' : '')
+         + '<button class="btn btn-ghost btn-sm" onclick="editProduct(' + p.id + ')">Edit</button>'
+         + '<button class="btn btn-danger btn-sm" onclick="deleteProduct(' + p.id + ')">Delete</button>'
+         + '</div></div></div>';
+  }).join('');
+}
+
+function openProdModal() {
+  $i('prod-modal-title').textContent = 'Add Product';
+  sv('p-id', ''); sv('p-name', ''); $i('p-desc').value = '';
+  sv('p-price', ''); sv('p-badge', ''); sv('p-img', '');
+  clearPrev('p-pw', 'p-img'); resetIT('p-img');
+  openModal('modal-prod');
+}
+
+function editProduct(id) {
+  var p = _state.products.find(function(x) { return x.id === id; });
+  if (!p) return;
+  $i('prod-modal-title').textContent = 'Edit Product';
+  sv('p-id', id); sv('p-name', p.name); $i('p-desc').value = p.description;
+  sv('p-price', p.price); sv('p-badge', p.badge || ''); sv('p-img', p.image || '');
+  if (p.image) { $i('p-pi').src = p.image; $i('p-pw').style.display = 'inline-block'; }
+  resetIT('p-img'); openModal('modal-prod');
+}
+
+function saveProduct() {
+  var name = gv('p-name'), desc = $i('p-desc').value.trim(), price = parseFloat(gv('p-price'));
+  if (!name) { toast('Product name required', 'err'); return; }
+  if (!desc)  { toast('Description required', 'err'); return; }
+  if (isNaN(price)) { toast('Enter a valid price', 'err'); return; }
+
+  var eid = parseInt(gv('p-id')) || 0;
+  var entry = { id: eid || Date.now(), name: name, description: desc, price: price, badge: gv('p-badge'), image: gv('p-img') };
+  var prods = _state.products.slice();
+  if (eid) {
+    var idx = prods.findIndex(function(x) { return x.id === eid; });
+    if (idx > -1) prods[idx] = entry; else prods.push(entry);
+  } else {
+    prods.push(entry);
+  }
+
+  api({ action: 'save_products', payload: prods })
+    .then(function() {
+      _state.products = prods;
+      closeModal('modal-prod'); renderProducts();
+      toast(eid ? 'Product updated!' : 'Product added!');
+    })
+    .catch(function(e) { toast(e.message, 'err'); });
+}
+
+function deleteProduct(id) {
+  if (!confirm('Delete this product?')) return;
+  var prods = _state.products.filter(function(p) { return p.id !== id; });
+  api({ action: 'save_products', payload: prods.length ? prods : [] })
+    .then(function() {
+      _state.products = prods; renderProducts(); toast('Product deleted', 'warn');
+    })
+    .catch(function(e) { toast(e.message, 'err'); });
+}
+
+// ── WEBSITE CONTENT ───────────────────────────────────────────────────────
+function loadContentFields() {
+  var c = _state.content || {};
+  sv('c-farmName',     c.farmName      || '');
+  sv('c-heroTitle',    c.heroTitle     || '');
+  sv('c-heroSubtitle', c.heroSubtitle  || '');
+  sv('c-heroBg',       c.heroBg        || '');
+  sv('c-statsYears',   c.statsYears    || '');
+  sv('c-statsChicks',  c.statsChicks   || '');
+  sv('c-statsSurvival',c.statsSurvival || '');
+  sv('c-statsFarmers', c.statsFarmers  || '');
+  sv('c-logoUrl',      c.logoImage     || '');
+  sv('c-aboutImage',   c.aboutImage    || '');
+  $i('c-about1').value = c.aboutPara1 || '';
+  $i('c-about2').value = c.aboutPara2 || '';
+  $i('c-about3').value = c.aboutPara3 || '';
+  sv('c-addr',  c.contactAddress  || '');
+  sv('c-phone', c.contactPhone    || '');
+  sv('c-email', c.contactEmail    || '');
+  sv('c-wa',    c.contactWhatsApp || '');
+  sv('c-hours', c.contactHours    || '');
+  sv('c-fb',    c.socialFacebook  || '');
+  sv('c-ig',    c.socialInstagram || '');
+
+  // Image previews
+  if (c.logoImage)  { $i('logo-pi').src = c.logoImage;   $i('logo-pw').style.display = 'inline-block'; }
+  if (c.heroBg)     { $i('hero-pi').src = c.heroBg;      $i('hero-pw').style.display = 'inline-block'; }
+  if (c.aboutImage) { $i('about-pi').src = c.aboutImage; $i('about-pw').style.display = 'inline-block'; }
+
+  // Testimonials editor
+  renderTestimonialsEditor(c.testimonials || []);
+  // FAQs editor
+  renderFaqsEditor(c.faqs || []);
+}
+
+// Testimonials editor
+function renderTestimonialsEditor(list) {
+  $i('testimonials-editor').innerHTML = list.map(function(t, i) {
+    return '<div class="sp" id="te-' + i + '" style="margin-bottom:.8rem">'
+         + '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:.6rem">'
+         + '<strong style="font-size:.88rem;color:var(--text-main)">Testimonial ' + (i + 1) + '</strong>'
+         + '<button class="btn btn-danger btn-sm" onclick="removeTestimonial(' + i + ')">Remove</button></div>'
+         + '<div class="frow">'
+         + '<div class="fg"><label>Quote Text</label><textarea class="fc" id="te-text-' + i + '" rows="2">' + esc(t.text || '') + '</textarea></div>'
+         + '</div><div class="frow">'
+         + '<div class="fg"><label>Author Name</label><input class="fc" type="text" id="te-author-' + i + '" value="' + esc(t.author || '') + '"></div>'
+         + '<div class="fg"><label>Context <span class="hint">(e.g. Broiler order)</span></label><input class="fc" type="text" id="te-ctx-' + i + '" value="' + esc(t.context || '') + '"></div>'
+         + '<div class="fg"><label>Stars (1–5)</label><input class="fc" type="number" id="te-stars-' + i + '" min="1" max="5" value="' + (t.stars || 5) + '"></div>'
+         + '</div></div>';
+  }).join('');
+}
+
+function addTestimonial() {
+  var c = _state.content || {};
+  var list = (c.testimonials || []).slice();
+  list.push({ stars: 5, text: '', author: '', context: '' });
+  _state.content.testimonials = list;
+  renderTestimonialsEditor(list);
+}
+
+function removeTestimonial(idx) {
+  var list = collectTestimonials();
+  list.splice(idx, 1);
+  _state.content.testimonials = list;
+  renderTestimonialsEditor(list);
+}
+
+function collectTestimonials() {
+  var list = [];
+  var i = 0;
+  while ($i('te-text-' + i)) {
+    list.push({
+      stars:   parseInt(gv('te-stars-' + i)) || 5,
+      text:    gv('te-text-' + i),
+      author:  gv('te-author-' + i),
+      context: gv('te-ctx-' + i),
+    });
+    i++;
+  }
+  return list;
+}
+
+// FAQs editor
+function renderFaqsEditor(list) {
+  $i('faqs-editor').innerHTML = list.map(function(f, i) {
+    return '<div class="sp" id="faq-' + i + '" style="margin-bottom:.8rem">'
+         + '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:.6rem">'
+         + '<strong style="font-size:.88rem;color:var(--text-main)">FAQ ' + (i + 1) + '</strong>'
+         + '<button class="btn btn-danger btn-sm" onclick="removeFaq(' + i + ')">Remove</button></div>'
+         + '<div class="fg"><label>Question</label><input class="fc" type="text" id="faq-q-' + i + '" value="' + esc(f.q || '') + '"></div>'
+         + '<div class="fg"><label>Answer</label><textarea class="fc" id="faq-a-' + i + '" rows="2">' + esc(f.a || '') + '</textarea></div>'
+         + '</div>';
+  }).join('');
+}
+
+function addFaq() {
+  var list = collectFaqs();
+  list.push({ q: '', a: '' });
+  _state.content.faqs = list;
+  renderFaqsEditor(list);
+}
+
+function removeFaq(idx) {
+  var list = collectFaqs();
+  list.splice(idx, 1);
+  _state.content.faqs = list;
+  renderFaqsEditor(list);
+}
+
+function collectFaqs() {
+  var list = [];
+  var i = 0;
+  while ($i('faq-q-' + i)) {
+    list.push({ q: gv('faq-q-' + i), a: $i('faq-a-' + i) ? $i('faq-a-' + i).value : '' });
+    i++;
+  }
+  return list;
+}
+
+function saveContent() {
+  var payload = {
+    farmName:        gv('c-farmName'),
+    logoImage:       gv('c-logoUrl'),
+    heroTitle:       gv('c-heroTitle'),
+    heroSubtitle:    gv('c-heroSubtitle'),
+    heroBg:          gv('c-heroBg'),
+    statsYears:      gv('c-statsYears'),
+    statsChicks:     gv('c-statsChicks'),
+    statsSurvival:   gv('c-statsSurvival'),
+    statsFarmers:    gv('c-statsFarmers'),
+    aboutImage:      gv('c-aboutImage'),
+    aboutPara1:      $i('c-about1').value,
+    aboutPara2:      $i('c-about2').value,
+    aboutPara3:      $i('c-about3').value,
+    contactAddress:  gv('c-addr'),
+    contactPhone:    gv('c-phone'),
+    contactEmail:    gv('c-email'),
+    contactWhatsApp: gv('c-wa'),
+    contactHours:    gv('c-hours'),
+    socialFacebook:  gv('c-fb'),
+    socialInstagram: gv('c-ig'),
+    testimonials:    collectTestimonials(),
+    faqs:            collectFaqs(),
+  };
+  api({ action: 'save_content', payload: payload })
+    .then(function() {
+      _state.content = payload;
+      toast('Content saved! Changes are live on the website.');
+    })
+    .catch(function(e) { toast(e.message, 'err'); });
+}
+
+// ── MEDIA LIBRARY ─────────────────────────────────────────────────────────
+function renderMedia() {
+  $i('st-media').textContent = _state.media.length;
+  if (!_state.media.length) {
+    $i('media-grid').innerHTML = emptyState('🖼', 'No Media Files', 'Upload images and videos to use across your site.'); return;
+  }
+  $i('media-grid').innerHTML = '<div class="media-grid">'
+    + _state.media.map(function(m) {
+        var thumb = m.type === 'video'
+          ? '<video src="' + esc(m.url) + '" style="width:100%;height:100px;object-fit:cover;display:block" muted></video>'
+          : '<img src="' + esc(m.url) + '" alt="' + esc(m.name) + '" loading="lazy">';
+        return '<div class="media-item">'
+             + thumb
+             + '<button class="media-use" onclick="copyUrl(\'' + esc(m.url) + '\')">📋 Copy URL</button>'
+             + '<button class="media-del" onclick="deleteMedia(\'' + esc(m.id) + '\')" title="Delete">✕</button>'
+             + '<div class="media-item-info">' + esc(m.name) + '</div></div>';
+      }).join('')
+    + '</div>';
+}
+
+function handleMLUpload(input) {
+  var files = Array.from(input.files);
+  if (!files.length) return;
+  var done = 0;
+  files.forEach(function(file) {
+    var fd = new FormData();
+    fd.append('action', 'upload_media');
+    fd.append('file', file);
+    fetch('api/data.php', { method: 'POST', credentials: 'include', body: fd })
+      .then(async function(r) {
+        const ct = r.headers.get('content-type') || '';
+        if (ct.includes('application/json')) {
+          return r.json();
+        } else {
+          let msg = 'Invalid server response.';
+          try { msg = await r.text(); } catch (e) {}
+          throw new Error(msg);
+        }
+      })
+      .then(function(d) {
+        if (d.success) { _state.media.push(d.file); toast('✓ ' + file.name); }
+        else toast(d.message || 'Upload failed', 'err');
+        done++;
+        if (done === files.length) { renderMedia(); $i('st-media').textContent = _state.media.length; }
+      })
+      .catch(function(e) { toast('Upload failed: ' + file.name + ' - ' + (e.message || ''), 'err'); });
+  });
+  input.value = '';
+}
+
+function deleteMedia(id) {
+  if (!confirm('Delete this file?')) return;
+  api({ action: 'delete_media', id: id })
+    .then(function() {
+      _state.media = _state.media.filter(function(m) { return m.id !== id; });
+      renderMedia(); toast('Deleted', 'warn');
+    })
+    .catch(function(e) { toast(e.message, 'err'); });
+}
+
+function copyUrl(url) {
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(url).then(function() { toast('URL copied!'); });
+  } else {
+    var ta = document.createElement('textarea');
+    ta.value = url; document.body.appendChild(ta); ta.select();
+    document.execCommand('copy'); document.body.removeChild(ta); toast('Copied!');
+  }
+}
+
+// ── SETTINGS ──────────────────────────────────────────────────────────────
+function loadSettings() {
+  sv('s-curEmail', _state.email);
+  sv('s-newEmail', ''); sv('s-curPw', ''); sv('s-newPw', ''); sv('s-confPw', '');
+}
+
+function updateEmail() {
+  var e = gv('s-newEmail');
+  if (!e || !e.includes('@')) { toast('Enter a valid email', 'err'); return; }
+  api({ action: 'change_credentials', payload: { newEmail: e } })
+    .then(function() {
+      _state.email = e;
+      $i('adminEmail').textContent = e;
+      sv('s-curEmail', e); sv('s-newEmail', '');
+      toast('Email updated!');
+    })
+    .catch(function(ex) { toast(ex.message, 'err'); });
+}
+
+function updatePassword() {
+  var cur = $i('s-curPw').value, nw = $i('s-newPw').value, conf = $i('s-confPw').value;
+  if (!cur) { toast('Enter current password', 'err'); return; }
+  if (nw.length < 8) { toast('New password must be 8+ characters', 'err'); return; }
+  if (nw !== conf) { toast('Passwords do not match', 'err'); return; }
+  api({ action: 'change_credentials', payload: { currentPassword: cur, newPassword: nw, confirmPassword: conf } })
+    .then(function() {
+      sv('s-curPw', ''); sv('s-newPw', ''); sv('s-confPw', '');
+      toast('Password updated!');
+    })
+    .catch(function(ex) { toast(ex.message, 'err'); });
+}
+
+function resetAllContent() {
+  if (!confirm('Reset ALL website content to defaults? This cannot be undone.')) return;
+  api({ action: 'save_content', payload: {} })
+    .then(function() { _state.content = {}; toast('Content reset to defaults', 'warn'); })
+    .catch(function(e) { toast(e.message, 'err'); });
+}
+
+// ── LOGOUT ────────────────────────────────────────────────────────────────
+function doLogout() {
+  fetch('api/logout.php', { credentials: 'include' })
+    .finally(function() { window.location.replace('admin-login.html'); });
+}
+
+// ── UPLOAD HELPERS ────────────────────────────────────────────────────────
+function doUpload(input, imgId, prevId, fieldId) {
+  var file = input.files[0]; if (!file) return;
+  var maxSize = file.type.startsWith('video/') ? 200 * 1024 * 1024 : 10 * 1024 * 1024;
+  if (file.size > maxSize) { toast('File too large', 'err'); return; }
+
+  // Show instant preview
+  var objUrl = URL.createObjectURL(file);
+  if (imgId && $i(imgId)) { $i(imgId).src = objUrl; }
+  if (prevId && $i(prevId)) $i(prevId).style.display = 'inline-block';
+  if (fieldId) sv(fieldId, objUrl); // temp until server responds
+
+  // Upload to server
+  var fd = new FormData();
+  fd.append('action', 'upload_media');
+  fd.append('file', file);
+  fetch('api/data.php', { method: 'POST', credentials: 'include', body: fd })
+    .then(async function(r) {
+      const ct = r.headers.get('content-type') || '';
+      if (ct.includes('application/json')) {
+        return r.json();
+      } else {
+        let msg = 'Invalid server response.';
+        try { msg = await r.text(); } catch (e) {}
+        throw new Error(msg);
+      }
+    })
+    .then(function(d) {
+      if (d.success) {
+        if (fieldId) sv(fieldId, d.file.url);
+        if (imgId && $i(imgId)) $i(imgId).src = d.file.url;
+        _state.media.push(d.file);
+        toast('✓ ' + file.name + ' uploaded');
+      } else {
+        toast(d.message || 'Upload failed', 'err');
+      }
+    })
+    .catch(function(e) { toast('Upload failed: ' + file.name + ' - ' + (e.message || ''), 'err'); });
+  input.value = '';
+}
+
+function prevUrl(fieldId, imgId, prevId) {
+  var v = gv(fieldId);
+  if (v && $i(imgId)) { $i(imgId).src = v; if ($i(prevId)) $i(prevId).style.display = 'inline-block'; }
+  else if ($i(prevId)) $i(prevId).style.display = 'none';
+}
+function clearPrev(prevId, fieldId) { if ($i(prevId)) $i(prevId).style.display = 'none'; sv(fieldId, ''); }
+
+function dzOver(e, el)  { e.preventDefault(); el.classList.add('drag'); }
+function dzLeave(el)    { el.classList.remove('drag'); }
+function dzDrop(e, fileInputId, imgId, prevId, fieldId) {
+  e.preventDefault(); e.currentTarget.classList.remove('drag');
+  var file = e.dataTransfer.files[0]; if (!file) return;
+  var fake = { files: [file], value: '' };
+  doUpload(fake, imgId, prevId, fieldId);
+}
+function dzDropML(e) {
+  e.preventDefault(); $i('ml-dropzone').classList.remove('drag');
+  var fake = { files: e.dataTransfer.files, value: '' };
+  handleMLUpload(fake);
+}
+
+function toggleIT(key, type, el) {
+  var urlDiv  = $i(key + '-url-wrap');
+  var fileDiv = $i(key + '-file-wrap');
+  if (urlDiv)  urlDiv.style.display  = type === 'url'  ? '' : 'none';
+  if (fileDiv) fileDiv.style.display = type === 'file' ? '' : 'none';
+  el.closest('.itabs').querySelectorAll('.itab').forEach(function(t) { t.classList.remove('active'); });
+  el.classList.add('active');
+}
+function resetIT(key) {
+  var urlDiv  = $i(key + '-url-wrap');
+  var fileDiv = $i(key + '-file-wrap');
+  if (urlDiv)  urlDiv.style.display  = '';
+  if (fileDiv) fileDiv.style.display = 'none';
+  var tabs = document.querySelectorAll('#' + key + '-url-wrap ~ .itabs .itab, .itabs');
+  // reset tabs for this key
+  var cont = urlDiv ? urlDiv.parentNode : null;
+  if (cont) {
+    var itabs = cont.querySelector('.itabs');
+    if (itabs) itabs.querySelectorAll('.itab').forEach(function(t, i) { t.classList.toggle('active', i === 0); });
+  }
+}
+</script>
+</body>
+</html>

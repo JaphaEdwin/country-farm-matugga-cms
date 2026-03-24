@@ -1,0 +1,2 @@
+# Deny all access — JSON files served only by PHP
+Require all denied

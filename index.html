@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Country Farm Matugga | Premium Day-Old Chicks in Uganda</title>
+  <meta name="description" content="Country Farm Matugga supplies premium day-old broiler, layer, and kuroiler chicks in Uganda.">
+  <meta name="theme-color" content="#1f4d2b">
+  <link rel="icon" type="image/png" href="Logo.png" id="favicon">
+  <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --green-900:#173f22;--green-800:#1f4d2b;--green-700:#2b6338;
+      --green-100:#edf6ee;--gold-500:#c89d2c;--gold-400:#e4bb4a;
+      --cream:#f7f4ed;--white:#ffffff;--ink:#142018;
+      --muted:#5e675f;--line:#e4e8e3;--shadow:0 12px 40px rgba(20,32,24,.08);
+      --radius:20px;--container:min(1180px,92vw);
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{font-family:Inter,system-ui,sans-serif;color:var(--ink);background:var(--cream);line-height:1.6;overflow-x:hidden}
+    img{max-width:100%;display:block}
+    a{text-decoration:none;color:inherit}
+    button,input,select,textarea{font:inherit}
+    .container{width:var(--container);margin:auto}
+    .serif{font-family:"Cormorant Garamond",serif}
+    .topbar{position:sticky;top:0;z-index:50;backdrop-filter:blur(16px);background:rgba(247,244,237,.86);border-bottom:1px solid rgba(228,232,227,.9)}
+    .nav{min-height:78px;display:flex;align-items:center;justify-content:space-between;gap:1rem}
+    .brand{display:flex;align-items:center;gap:.85rem}
+    .brand img{width:50px;height:50px;object-fit:contain;border-radius:14px}
+    .brand h1{font-size:1.35rem;line-height:1;color:var(--green-800)}
+    .brand p{font-size:.78rem;color:var(--muted)}
+    .nav-links{display:flex;align-items:center;gap:1.4rem;list-style:none}
+    .nav-links a{font-size:.95rem;color:#334338;font-weight:500}
+    .nav-links a:hover{color:var(--green-800)}
+    .nav-cta,.btn-primary,.btn-secondary,.btn-whatsapp{
+      display:inline-flex;align-items:center;justify-content:center;gap:.55rem;
+      border-radius:999px;padding:.95rem 1.3rem;border:none;cursor:pointer;
+      transition:.25s ease transform,.25s ease box-shadow,.25s ease background;font-weight:700;
+    }
+    .nav-cta,.btn-primary{background:linear-gradient(135deg,var(--green-800),var(--green-700));color:var(--white);box-shadow:0 10px 24px rgba(31,77,43,.18)}
+    .nav-cta:hover,.btn-primary:hover{transform:translateY(-2px);box-shadow:0 14px 28px rgba(31,77,43,.24)}
+    .btn-secondary{color:var(--white);background:transparent;border:1.5px solid rgba(255,255,255,.4)}
+    .btn-secondary:hover{background:rgba(255,255,255,.09);transform:translateY(-2px)}
+    .btn-whatsapp{background:#25d366;color:#fff}
+    .btn-whatsapp:hover{transform:translateY(-2px);box-shadow:0 12px 24px rgba(37,211,102,.24)}
+    .menu-toggle{display:none;background:none;border:none;padding:.4rem;cursor:pointer}
+    .menu-toggle span{display:block;width:24px;height:2px;background:var(--ink);margin:5px 0;border-radius:999px}
+    .hero{position:relative;background:linear-gradient(180deg,rgba(12,26,15,.72),rgba(23,63,34,.72)),linear-gradient(120deg,#16371f,#214e2d 55%,#1c4728);color:#fff;padding:6.5rem 0 4rem;overflow:hidden;background-size:cover;background-position:center}
+    .hero::after{content:"";position:absolute;inset:auto -8% -120px auto;width:420px;height:420px;border-radius:50%;background:radial-gradient(circle,rgba(228,187,74,.18),transparent 66%);filter:blur(8px)}
+    .hero-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:2.2rem;align-items:center;position:relative;z-index:1}
+    .eyebrow{display:inline-flex;align-items:center;gap:.55rem;border:1px solid rgba(228,187,74,.35);background:rgba(228,187,74,.12);color:#f5d67c;border-radius:999px;padding:.5rem .95rem;font-size:.8rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin-bottom:1.1rem}
+    .hero h2{font-size:clamp(3rem,6vw,5.5rem);line-height:.95;margin-bottom:1rem;letter-spacing:-.03em}
+    .hero h2 em{font-style:italic;color:#f5d67c}
+    .hero p{font-size:1.08rem;max-width:620px;color:rgba(255,255,255,.86);margin-bottom:1.5rem}
+    .hero-points{display:flex;flex-wrap:wrap;gap:.7rem;margin-bottom:1.8rem}
+    .hero-points span{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.12);padding:.6rem .9rem;border-radius:999px;font-size:.92rem;color:#eef6f0}
+    .hero-actions{display:flex;flex-wrap:wrap;gap:.9rem}
+    .hero-card{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);border-radius:28px;padding:1.35rem;box-shadow:0 20px 50px rgba(0,0,0,.18);backdrop-filter:blur(12px)}
+    .hero-card-inner{background:rgba(255,255,255,.97);color:var(--ink);border-radius:22px;padding:1.5rem}
+    .hero-card h3{font-size:1.25rem;color:var(--green-800);margin-bottom:.4rem}
+    .hero-card p{color:var(--muted);font-size:.96rem;margin-bottom:1rem}
+    .mini-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:.9rem}
+    .mini-stat{padding:1rem;border:1px solid var(--line);border-radius:18px;background:var(--white)}
+    .mini-stat strong{display:block;font-size:1.35rem;color:var(--green-800)}
+    .mini-stat span{font-size:.9rem;color:var(--muted)}
+    .stats{background:var(--green-800);color:#fff;padding:1.2rem 0 4.4rem;margin-top:-1px}
+    .stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-top:1rem}
+    .stat{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.09);border-radius:22px;padding:1.25rem;text-align:center}
+    .stat strong{display:block;font-size:2rem;color:#f5d67c}
+    .stat span{color:rgba(255,255,255,.78);font-size:.92rem}
+    section{padding:5.5rem 0}
+    .section-head{text-align:center;max-width:720px;margin:0 auto 2.6rem}
+    .section-kicker{font-size:.84rem;letter-spacing:.12em;text-transform:uppercase;font-weight:800;color:var(--green-700);margin-bottom:.7rem}
+    .section-head h3{font-size:clamp(2rem,4vw,3.3rem);line-height:1;margin-bottom:.9rem;color:var(--green-800)}
+    .section-head p{color:var(--muted)}
+    .products-wrap{display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem}
+    .card{background:var(--white);border:1px solid var(--line);border-radius:24px;overflow:hidden;box-shadow:var(--shadow)}
+    .product-media{aspect-ratio:4/3;background:linear-gradient(135deg,#e7f0e7,#dce9dc);display:flex;align-items:center;justify-content:center;padding:1rem;position:relative}
+    .product-badge{position:absolute;top:1rem;left:1rem;background:rgba(23,63,34,.9);color:#fff;border-radius:999px;padding:.45rem .8rem;font-size:.78rem;font-weight:700}
+    .product-media img{width:min(220px,72%);height:auto;object-fit:contain;filter:drop-shadow(0 10px 20px rgba(0,0,0,.08))}
+    .product-body{padding:1.4rem 1.4rem 1.55rem}
+    .product-title{display:flex;justify-content:space-between;gap:1rem;align-items:start;margin-bottom:.55rem}
+    .product-title h4{font-size:1.6rem;color:var(--green-800)}
+    .price{font-size:1rem;font-weight:800;color:var(--gold-500);white-space:nowrap}
+    .product-body p{color:var(--muted);font-size:.95rem;margin-bottom:1rem}
+    .product-tags{display:flex;flex-wrap:wrap;gap:.55rem;margin-bottom:1rem}
+    .tag{background:var(--green-100);color:var(--green-800);border-radius:999px;padding:.45rem .75rem;font-size:.82rem;font-weight:700}
+    .product-body .btn-primary{width:100%}
+    .why{background:#eef5ee}
+    .why-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem}
+    .why-card{background:#fff;border:1px solid var(--line);border-radius:22px;padding:1.4rem;box-shadow:var(--shadow)}
+    .why-icon{width:52px;height:52px;border-radius:16px;background:linear-gradient(135deg,var(--green-800),var(--green-700));display:grid;place-items:center;color:#fff;margin-bottom:1rem;font-size:1.1rem;font-weight:700}
+    .why-card h4{font-size:1.08rem;color:var(--green-800);margin-bottom:.45rem}
+    .why-card p{color:var(--muted);font-size:.94rem}
+    .about-grid{display:grid;grid-template-columns:1fr 1fr;gap:2rem;align-items:center}
+    .about-panel,.contact-panel,.quote-panel,.testimonial,.faq-item{background:#fff;border:1px solid var(--line);box-shadow:var(--shadow)}
+    .about-panel{border-radius:26px;overflow:hidden}
+    .about-photo{min-height:460px;background:linear-gradient(135deg,#f1f5ea,#dfeadb);display:grid;place-items:center;padding:2rem}
+    .about-photo img{max-width:min(420px,86%);border-radius:18px}
+    .about-copy{padding:2rem}
+    .about-copy h3{font-size:2.3rem;line-height:1;color:var(--green-800);margin-bottom:1rem}
+    .about-copy p{color:var(--muted);margin-bottom:1rem}
+    .about-list{display:grid;grid-template-columns:repeat(2,1fr);gap:.8rem;margin-top:1rem}
+    .about-list div{background:var(--green-100);padding:.9rem 1rem;border-radius:16px;font-weight:700;color:var(--green-800)}
+    .testimonials-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}
+    .testimonial{border-radius:22px;padding:1.4rem}
+    .stars{color:var(--gold-500);letter-spacing:.1em;margin-bottom:.75rem}
+    .testimonial p{color:var(--muted);margin-bottom:1rem}
+    .testimonial strong{display:block;color:var(--green-800)}
+    .testimonial span{font-size:.92rem;color:var(--muted)}
+    .faq{background:#eef5ee}
+    .faq-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1rem}
+    .faq-item{border-radius:20px;padding:1.2rem 1.25rem}
+    .faq-item h4{color:var(--green-800);margin-bottom:.45rem;font-size:1.04rem}
+    .faq-item p{color:var(--muted);font-size:.95rem}
+    .contact-grid{display:grid;grid-template-columns:.95fr 1.05fr;gap:1.2rem}
+    .contact-panel,.quote-panel{border-radius:24px;padding:1.5rem}
+    .info-stack{display:grid;gap:1rem;margin-top:1rem}
+    .info-row{display:flex;gap:.9rem;align-items:flex-start;padding:1rem;border:1px solid var(--line);border-radius:18px}
+    .info-bullet{width:44px;height:44px;border-radius:14px;background:var(--green-100);color:var(--green-800);display:grid;place-items:center;font-size:1.1rem;font-weight:800;flex:0 0 44px}
+    .info-row small{display:block;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.08em;margin-bottom:.2rem}
+    .info-row strong,.info-row a{color:var(--green-800)}
+    .quote-panel h4,.contact-panel h4{font-size:1.7rem;color:var(--green-800);margin-bottom:.6rem}
+    .quote-panel>p,.contact-panel>p{color:var(--muted);margin-bottom:1.2rem}
+    .field{margin-bottom:1rem}
+    .field label{display:block;font-weight:700;font-size:.92rem;color:#233426;margin-bottom:.42rem}
+    .field input,.field select,.field textarea{width:100%;border:1.5px solid #d8ded8;background:#fcfcfa;border-radius:16px;padding:.92rem 1rem;color:var(--ink)}
+    .field input:focus,.field select:focus,.field textarea:focus{outline:none;border-color:var(--gold-500);box-shadow:0 0 0 4px rgba(200,157,44,.12)}
+    .field textarea{min-height:120px;resize:vertical}
+    .field-row{display:grid;grid-template-columns:repeat(2,1fr);gap:.9rem}
+    .quote-summary{display:flex;justify-content:space-between;align-items:center;gap:1rem;padding:1rem 1.1rem;border-radius:18px;background:var(--green-100);margin-bottom:1rem}
+    .quote-summary span{font-size:.9rem;color:var(--muted);font-weight:700}
+    .quote-summary strong{font-size:1.35rem;color:var(--green-800)}
+    .success-message,.error-message{display:none;margin-top:1rem;padding:.95rem 1rem;border-radius:16px;font-weight:600}
+    .success-message{background:#e7f8ec;color:#1d6b39;border:1px solid #c9ecd6}
+    .error-message{background:#fff0f0;color:#b33939;border:1px solid #f0c5c5}
+    footer{padding:1.8rem 0;background:#112d19;color:rgba(255,255,255,.82)}
+    .footer-inner{display:flex;justify-content:space-between;gap:1rem;align-items:center;flex-wrap:wrap}
+    .footer-inner a{color:#f5d67c}
+    .mobile-menu{position:fixed;inset:78px 0 auto 0;background:rgba(247,244,237,.98);border-bottom:1px solid var(--line);display:none;z-index:49}
+    .mobile-menu.open{display:block}
+    .mobile-menu .container{padding:1rem 0 1.3rem;display:grid;gap:.8rem}
+    .mobile-menu a{padding:.75rem 0;color:var(--green-800);font-weight:700}
+    @media(max-width:980px){
+      .nav-links{display:none}.menu-toggle{display:block}
+      .hero-grid,.about-grid,.contact-grid{grid-template-columns:1fr}
+      .stats-grid,.why-grid,.testimonials-grid,.faq-grid,.products-wrap{grid-template-columns:repeat(2,1fr)}
+    }
+    @media(max-width:720px){
+      .hero{padding-top:5.2rem}
+      .hero-actions{flex-direction:column;align-items:stretch}
+      .hero-actions a{width:100%}
+      .stats-grid,.why-grid,.testimonials-grid,.faq-grid,.products-wrap,.field-row,.about-list,.mini-grid{grid-template-columns:1fr}
+      .footer-inner{flex-direction:column;align-items:flex-start}
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="container nav">
+      <a class="brand" href="#home">
+        <img id="brandLogo" src="Logo.png" alt="Country Farm Matugga logo" loading="lazy">
+        <div>
+          <h1 class="serif" id="brandName">Country Farm</h1>
+          <p>Premium poultry supply in Uganda</p>
+        </div>
+      </a>
+      <ul class="nav-links">
+        <li><a href="#products">Products</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#why-us">Why Us</a></li>
+        <li><a href="#contact">Contact</a></li>
+        <li><a class="nav-cta" href="#quote">Request Quote</a></li>
+      </ul>
+      <button class="menu-toggle" id="menuToggle" aria-label="Open menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+    <div class="mobile-menu" id="mobileMenu">
+      <div class="container">
+        <a href="#products">Products</a>
+        <a href="#about">About</a>
+        <a href="#why-us">Why Us</a>
+        <a href="#testimonials">Testimonials</a>
+        <a href="#contact">Contact</a>
+        <a class="nav-cta" href="#quote">Request Quote</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero" id="home">
+      <div class="container hero-grid">
+        <div>
+          <div class="eyebrow">Trusted poultry supply • Matugga, Uganda</div>
+          <h2 class="serif" id="heroTitle">Premium day-old chicks for <em>serious farmers</em>.</h2>
+          <p id="heroSubtitle">Healthy stock, dependable guidance, and a clean ordering process for broilers, layers, and kuroilers.</p>
+          <div class="hero-points">
+            <span>Vaccination guidance</span>
+            <span>Bulk orders supported</span>
+            <span>Fast WhatsApp response</span>
+          </div>
+          <div class="hero-actions">
+            <a class="btn-primary" href="#quote">Request a Quote</a>
+            <a class="btn-secondary" href="#products">View Products</a>
+          </div>
+        </div>
+        <div class="hero-card">
+          <div class="hero-card-inner">
+            <h3>Order planning made simpler</h3>
+            <p>Choose your chick type, enter quantity, and send a structured request instantly.</p>
+            <div class="mini-grid">
+              <div class="mini-stat"><strong>3</strong><span>Core chick types</span></div>
+              <div class="mini-stat"><strong>Fast</strong><span>Quote turnaround</span></div>
+              <div class="mini-stat" id="miniStatYears"><strong>15+</strong><span>Years in poultry</span></div>
+              <div class="mini-stat"><strong>Support</strong><span>After purchase</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="stats">
+      <div class="container stats-grid">
+        <div class="stat"><strong id="statYears">15+</strong><span>Years experience</span></div>
+        <div class="stat"><strong id="statChicks">500K+</strong><span>Chicks delivered</span></div>
+        <div class="stat"><strong id="statSurvival">95%</strong><span>Survival rate</span></div>
+        <div class="stat"><strong id="statFarmers">2,000+</strong><span>Happy farmers</span></div>
+      </div>
+    </section>
+
+    <section id="products">
+      <div class="container">
+        <div class="section-head">
+          <div class="section-kicker">Our Products</div>
+          <h3 class="serif">Chicks selected for performance and practical farm results</h3>
+          <p>Clear pricing and none of that mysterious "ask inbox" nonsense that wastes everyone's time.</p>
+        </div>
+        <div class="products-wrap" id="productsWrap">
+          <!-- Populated by JS -->
+        </div>
+      </div>
+    </section>
+
+    <section class="why" id="why-us">
+      <div class="container">
+        <div class="section-head">
+          <div class="section-kicker">Why Farmers Choose Us</div>
+          <h3 class="serif">A cleaner, more dependable buying experience</h3>
+          <p>Because buying chicks should not feel like decoding ancient prophecy from a WhatsApp status update.</p>
+        </div>
+        <div class="why-grid">
+          <div class="why-card"><div class="why-icon">1</div><h4>Clear ordering</h4><p>Simple quote requests, faster replies, and less back-and-forth confusion.</p></div>
+          <div class="why-card"><div class="why-icon">2</div><h4>Healthy stock focus</h4><p>We prioritize reliable sourcing and proper guidance for strong chick performance.</p></div>
+          <div class="why-card"><div class="why-icon">3</div><h4>Expert support</h4><p>Farmers get direction on selection, planning, and early-stage management.</p></div>
+          <div class="why-card"><div class="why-icon">4</div><h4>Built for trust</h4><p>Visible contact details, straightforward messaging, and a professional presentation.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="about">
+      <div class="container about-grid">
+        <div class="about-panel">
+          <div class="about-photo">
+            <img id="aboutImage" src="Logo.png" alt="Country Farm Matugga" loading="lazy">
+          </div>
+        </div>
+        <div class="about-copy">
+          <div class="section-kicker">About Country Farm Matugga</div>
+          <h3 class="serif" id="aboutTitle">A premium poultry supplier</h3>
+          <p id="aboutPara1">Country Farm Matugga serves farmers who want quality chicks, consistent communication, and a supplier that looks like it takes its work seriously.</p>
+          <p id="aboutPara2">This version of the site keeps things simple while improving credibility, structure, and buyer confidence.</p>
+          <p id="aboutPara3" style="display:none"></p>
+          <div class="about-list">
+            <div>Broilers, Layers, Kuroilers</div>
+            <div>Fast quote response</div>
+            <div>Farmer-friendly guidance</div>
+            <div>Professional presentation</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="testimonials">
+      <div class="container">
+        <div class="section-head">
+          <div class="section-kicker">Testimonials</div>
+          <h3 class="serif">Trust signals that feel human</h3>
+        </div>
+        <div class="testimonials-grid" id="testimonialsGrid">
+          <!-- Populated by JS -->
+        </div>
+      </div>
+    </section>
+
+    <section class="faq" id="faq">
+      <div class="container">
+        <div class="section-head">
+          <div class="section-kicker">Frequently Asked Questions</div>
+          <h3 class="serif">The things people always ask before finally placing the order</h3>
+        </div>
+        <div class="faq-grid" id="faqGrid">
+          <!-- Populated by JS -->
+        </div>
+      </div>
+    </section>
+
+    <section id="contact">
+      <div class="container contact-grid">
+        <div class="contact-panel">
+          <h4 class="serif">Contact &amp; ordering</h4>
+          <div class="info-stack">
+            <div class="info-row">
+              <div class="info-bullet">☎</div>
+              <div><small>Phone</small><strong><a id="phoneLink" href="tel:+256700000000">+256 700 000 000</a></strong></div>
+            </div>
+            <div class="info-row">
+              <div class="info-bullet">✉</div>
+              <div><small>Email</small><strong><a id="emailLink" href="mailto:info@countryfarmmatugga.com">info@countryfarmmatugga.com</a></strong></div>
+            </div>
+            <div class="info-row">
+              <div class="info-bullet">⌂</div>
+              <div><small>Location</small><strong id="locationText">Matugga, Uganda</strong></div>
+            </div>
+            <div class="info-row" id="hoursRow">
+              <div class="info-bullet">⏰</div>
+              <div><small>Business hours</small><strong id="hoursText">Mon - Sat, 8:00 AM - 6:00 PM</strong></div>
+            </div>
+          </div>
+          <a class="btn-whatsapp" id="whatsAppBtn" href="https://wa.me/256700000000?text=Hello%20Country%20Farm%20Matugga" target="_blank" rel="noopener" style="margin-top:1.2rem;display:inline-flex">Order via WhatsApp</a>
+        </div>
+
+        <div class="quote-panel" id="quote">
+          <h4 class="serif">Request a quote</h4>
+          <p>Structured enquiry, better response quality, less chaos.</p>
+          <form id="quoteForm" novalidate>
+            <div class="field-row">
+              <div class="field"><label for="name">Full name</label><input id="name" name="name" type="text" placeholder="Your name" required></div>
+              <div class="field"><label for="phone">Phone number</label><input id="phone" name="phone" type="tel" placeholder="e.g. +256..." required></div>
+            </div>
+            <div class="field-row">
+              <div class="field">
+                <label for="farmType">Farm type</label>
+                <select id="farmType" name="farmType" required>
+                  <option value="">Select farm type</option>
+                  <option>Starter Farm</option><option>Growing Farm</option><option>Commercial Farm</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="product">Product</label>
+                <select id="product" name="product" required>
+                  <option value="">Select product</option>
+                </select>
+              </div>
+            </div>
+            <div class="field-row">
+              <div class="field"><label for="quantity">Quantity</label><input id="quantity" name="quantity" type="number" min="1" step="1" value="100" required></div>
+              <div class="field"><label for="district">District</label><input id="district" name="district" type="text" placeholder="Your district" required></div>
+            </div>
+            <div class="quote-summary">
+              <div><span>Estimated total</span><strong id="estimatedTotal">UGX —</strong></div>
+              <div><span>Reference price only</span></div>
+            </div>
+            <div class="field"><label for="message">Extra notes</label><textarea id="message" name="message" placeholder="Tell us anything important about your order."></textarea></div>
+            <button class="btn-primary" type="submit" id="submitBtn">Send quote request</button>
+            <div class="success-message" id="successMessage">Your quote request has been sent successfully. We will contact you shortly.</div>
+            <div class="error-message" id="errorMessage">We could not send your request. Please try again.</div>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container footer-inner">
+      <div>© <span id="year"></span> <span id="footerName">Country Farm Matugga</span>. All rights reserved.</div>
+      <div>Premium poultry supply · <a id="footerEmail" href="mailto:info@countryfarmmatugga.com">info@countryfarmmatugga.com</a></div>
+    </div>
+  </footer>
+
+  <script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  // ── Mobile menu ────────────────────────────────────────────────────────
+  document.getElementById('menuToggle').addEventListener('click', () => {
+    document.getElementById('mobileMenu').classList.toggle('open');
+  });
+  document.querySelectorAll('.mobile-menu a').forEach(a =>
+    a.addEventListener('click', () => document.getElementById('mobileMenu').classList.remove('open'))
+  );
+
+  // ── Secret admin access ────────────────────────────────────────────────
+  let secretBuf = '', secretTimer = null;
+  document.addEventListener('keydown', (e) => {
+    if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
+      e.preventDefault(); window.location.href = 'admin-login.html'; return;
+    }
+    const inEditable = ['INPUT','TEXTAREA','SELECT'].includes(e.target.tagName) || e.target.isContentEditable;
+    if (!e.ctrlKey && !e.metaKey && !e.altKey && !inEditable && e.key.length === 1) {
+      secretBuf = (secretBuf + e.key.toLowerCase()).slice(-5);
+      clearTimeout(secretTimer);
+      secretTimer = setTimeout(() => { secretBuf = ''; }, 2500);
+      if (secretBuf === 'admin') window.location.href = 'admin-login.html';
+    }
+  });
+
+  // ── State ──────────────────────────────────────────────────────────────
+  let _products = [];
+
+  // ── Load public data ───────────────────────────────────────────────────
+  async function loadContent() {
+    try {
+      const res  = await fetch('api/data.php?action=public');
+      let data;
+      const ct = res.headers.get('content-type') || '';
+      if (ct.includes('application/json')) {
+        data = await res.json();
+      } else {
+        let msg = 'Invalid server response.';
+        try { msg = await res.text(); } catch (e) {}
+        throw new Error(msg);
+      }
+      if (!data.success) return;
+
+      const c = data.content || {};
+      const p = data.products || [];
+      _products = p;
+
+      // Logo & name
+      if (c.logoImage) {
+        document.getElementById('brandLogo').src = c.logoImage;
+        document.getElementById('favicon').href = c.logoImage;
+      }
+      if (c.farmName) {
+        document.getElementById('brandName').textContent = c.farmName;
+        document.getElementById('footerName').textContent = c.farmName;
+        document.title = c.farmName + ' | Premium Day-Old Chicks';
+      }
+
+      // Hero bg
+      if (c.heroBg) {
+        document.querySelector('.hero').style.backgroundImage =
+          `linear-gradient(180deg,rgba(12,26,15,.72),rgba(23,63,34,.72)),url('${c.heroBg}')`;
+      }
+
+      // Hero text
+      if (c.heroTitle) {
+        const t = document.getElementById('heroTitle');
+        // Preserve italic for "serious farmers" if text matches
+        t.textContent = c.heroTitle;
+      }
+      if (c.heroSubtitle) document.getElementById('heroSubtitle').textContent = c.heroSubtitle;
+
+      // Stats
+      if (c.statsYears)    document.getElementById('statYears').textContent   = c.statsYears;
+      if (c.statsChicks)   document.getElementById('statChicks').textContent  = c.statsChicks;
+      if (c.statsSurvival) document.getElementById('statSurvival').textContent= c.statsSurvival;
+      if (c.statsFarmers)  document.getElementById('statFarmers').textContent = c.statsFarmers;
+
+      // About
+      if (c.aboutImage) document.getElementById('aboutImage').src = c.aboutImage;
+      if (c.aboutPara1) document.getElementById('aboutPara1').textContent = c.aboutPara1;
+      if (c.aboutPara2) document.getElementById('aboutPara2').textContent = c.aboutPara2;
+      const p3 = document.getElementById('aboutPara3');
+      if (c.aboutPara3) { p3.textContent = c.aboutPara3; p3.style.display = ''; }
+
+      // Contact
+      const wa = c.contactWhatsApp || '256700000000';
+      const waMsg = encodeURIComponent('Hello ' + (c.farmName || 'Country Farm Matugga') + ', I would like to order chicks.');
+      document.getElementById('whatsAppBtn').href = `https://wa.me/${wa}?text=${waMsg}`;
+
+      if (c.contactPhone) {
+        document.getElementById('phoneLink').textContent = c.contactPhone;
+        document.getElementById('phoneLink').href = 'tel:' + c.contactPhone.replace(/\s/g, '');
+      }
+      if (c.contactEmail) {
+        document.getElementById('emailLink').textContent = c.contactEmail;
+        document.getElementById('emailLink').href = 'mailto:' + c.contactEmail;
+        document.getElementById('footerEmail').textContent = c.contactEmail;
+        document.getElementById('footerEmail').href = 'mailto:' + c.contactEmail;
+      }
+      if (c.contactAddress) document.getElementById('locationText').textContent = c.contactAddress;
+      if (c.contactHours)   document.getElementById('hoursText').textContent    = c.contactHours;
+
+      // Testimonials
+      const tGrid = document.getElementById('testimonialsGrid');
+      if (c.testimonials && c.testimonials.length) {
+        tGrid.innerHTML = c.testimonials.map(t => `
+          <article class="testimonial">
+            <div class="stars">${'★'.repeat(t.stars || 5)}</div>
+            <p>${esc(t.text)}</p>
+            <strong>${esc(t.author)}</strong>
+            <span>${esc(t.context)}</span>
+          </article>`).join('');
+      }
+
+      // FAQs
+      const fGrid = document.getElementById('faqGrid');
+      if (c.faqs && c.faqs.length) {
+        fGrid.innerHTML = c.faqs.map(f => `
+          <article class="faq-item">
+            <h4>${esc(f.q)}</h4>
+            <p>${esc(f.a)}</p>
+          </article>`).join('');
+      }
+
+      // Products
+      renderProducts(p);
+
+      // Product select options
+      const sel = document.getElementById('product');
+      sel.innerHTML = '<option value="">Select product</option>' +
+        p.map(x => `<option value="${esc(x.name)}">${esc(x.name)}</option>`).join('');
+
+    } catch (err) {
+      console.error('Content load failed:', err);
+    }
+  }
+
+  function renderProducts(products) {
+    const wrap = document.getElementById('productsWrap');
+    if (!products.length) return;
+    wrap.innerHTML = products.map(p => `
+      <article class="card">
+        <div class="product-media">
+          <span class="product-badge">${esc(p.badge)}</span>
+          <img src="${p.image || 'Logo.png'}" alt="${esc(p.name)}" loading="lazy"
+               onerror="this.src='Logo.png'">
+        </div>
+        <div class="product-body">
+          <div class="product-title">
+            <h4 class="serif">${esc(p.name)}</h4>
+            <span class="price">UGX ${Number(p.price).toLocaleString()}+</span>
+          </div>
+          <p>${esc(p.description)}</p>
+          <button class="btn-primary select-product" data-product="${esc(p.name)}">
+            Request ${esc(p.name)}
+          </button>
+        </div>
+      </article>`).join('');
+    // Re-bind clicks
+    document.querySelectorAll('.select-product').forEach(btn =>
+      btn.addEventListener('click', () => {
+        document.getElementById('product').value = btn.dataset.product;
+        document.getElementById('quote').scrollIntoView({ behavior: 'smooth' });
+        updateEstimate();
+      })
+    );
+  }
+
+  // ── Quote estimate ─────────────────────────────────────────────────────
+  function updateEstimate() {
+    const prodName = document.getElementById('product').value;
+    const qty      = parseInt(document.getElementById('quantity').value) || 0;
+    const prod     = _products.find(p => p.name === prodName);
+    const el       = document.getElementById('estimatedTotal');
+    if (prod && qty > 0) {
+      el.textContent = 'UGX ' + (prod.price * qty).toLocaleString();
+    } else {
+      el.textContent = 'UGX —';
+    }
+  }
+  document.getElementById('product').addEventListener('change', updateEstimate);
+  document.getElementById('quantity').addEventListener('input', updateEstimate);
+
+  // ── Quote form ─────────────────────────────────────────────────────────
+  document.getElementById('quoteForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const btn = document.getElementById('submitBtn');
+    const ok  = document.getElementById('successMessage');
+    const err = document.getElementById('errorMessage');
+    ok.style.display = err.style.display = 'none';
+    btn.disabled = true; btn.textContent = 'Sending…';
+
+    const prodName = document.getElementById('product').value;
+    const qty      = parseInt(document.getElementById('quantity').value) || 0;
+    const prod     = _products.find(p => p.name === prodName);
+
+    try {
+      const res  = await fetch('api/data.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          action: 'save_quote',
+          payload: {
+            name:           document.getElementById('name').value.trim(),
+            phone:          document.getElementById('phone').value.trim(),
+            farmType:       document.getElementById('farmType').value,
+            product:        prodName,
+            quantity:       qty,
+            district:       document.getElementById('district').value.trim(),
+            message:        document.getElementById('message').value.trim(),
+            estimatedTotal: prod ? prod.price * qty : 0,
+          }
+        })
+      });
+      let data;
+      const ct = res.headers.get('content-type') || '';
+      if (ct.includes('application/json')) {
+        data = await res.json();
+      } else {
+        let msg = 'Invalid server response.';
+        try { msg = await res.text(); } catch (e) {}
+        throw new Error(msg);
+      }
+      if (!data.success) throw new Error(data.message || 'Failed');
+      ok.style.display = 'block';
+      e.target.reset();
+      updateEstimate();
+    } catch (ex) {
+      err.textContent = ex.message || 'Could not send request. Please try again.';
+      err.style.display = 'block';
+    } finally {
+      btn.disabled = false; btn.textContent = 'Send quote request';
+    }
+  });
+
+  function esc(s) {
+    return String(s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+
+  loadContent();
+  </script>
+</body>
+</html>
