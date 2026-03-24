@@ -10,6 +10,18 @@ RewriteEngine On
 # Route /admin and /admin/ to admin.html (no PHP needed)
 RewriteRule ^admin/?$ /admin.html [L]
 
+# --- Allow POST, GET, OPTIONS and set CORS for API endpoints ---
+<Files "api/data.php">
+    <LimitExcept GET POST OPTIONS>
+        Deny from all
+    </LimitExcept>
+    <IfModule mod_headers.c>
+        Header always set Access-Control-Allow-Origin "*"
+        Header always set Access-Control-Allow-Methods "POST, GET, OPTIONS"
+        Header always set Access-Control-Allow-Headers "Content-Type"
+    </IfModule>
+</Files>
+
 # Block access to /api/data/ JSON files
 RewriteRule ^api/data/ - [F,L]
 
